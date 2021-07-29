@@ -1,0 +1,36 @@
+$cell-size: calc(max(80px, 7vw));
+$enable-shadows: true;
+
+.container {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.board-container {
+		@if $enable-shadows {
+			box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+		}
+
+		.board {
+			display: grid;
+			justify-content: center;
+			align-content: center;
+			justify-items: center;
+			align-items: center;
+			grid-template-columns: repeat(3, auto);
+
+			.cell {
+				width: $cell-size;
+				height: $cell-size;
+				background-color: black;
+				border: 1px solid red;
+			}
+		}
+	}
+}
+
+.game-end {
+	display: none;
+}
