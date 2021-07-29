@@ -26,6 +26,22 @@ $enable-shadows: true;
 				height: $cell-size;
 				background-color: black;
 				border: 1px solid red;
+
+				// Remove outer borders
+				&:nth-child(n + 1):nth-child(-n + 3) {
+					// from 1 to 3 - first row
+					border-top: none;
+				}
+				&:nth-child(n + 7):nth-child(-n + 9) {
+					// from 7 to 9 - last row
+					border-bottom: none;
+				}
+				&:nth-child(3n + 1) {
+					border-left: none;
+				}
+				&:nth-child(3n + 3) {
+					border-right: none;
+				}
 			}
 		}
 	}
