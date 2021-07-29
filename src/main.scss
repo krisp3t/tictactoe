@@ -20,12 +20,13 @@ $enable-shadows: true;
 			justify-items: center;
 			align-items: center;
 			grid-template-columns: repeat(3, auto);
+			background-color: blue;
 
 			.cell {
 				width: $cell-size;
 				height: $cell-size;
-				background-color: black;
 				border: 1px solid red;
+				cursor: pointer;
 
 				// Remove outer borders
 				&:nth-child(n + 1):nth-child(-n + 3) {
@@ -41,6 +42,24 @@ $enable-shadows: true;
 				}
 				&:nth-child(3n + 3) {
 					border-right: none;
+				}
+
+				&:not(.cross):not(.circle):hover {
+					opacity: 0.7;
+					background-image: url(assets/cross.svg);
+				}
+
+				&.cross,
+				&.circle {
+					cursor: not-allowed;
+					background: center/70% no-repeat;
+				}
+
+				&.cross {
+					background-image: url(assets/cross.svg);
+				}
+				&.circle {
+					background-image: url(assets/circle.svg);
 				}
 			}
 		}
