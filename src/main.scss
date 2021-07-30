@@ -5,13 +5,19 @@ $cell-background: center/70% no-repeat;
 @mixin svg {
 	background: $cell-background;
 }
-@mixin cross {
+@mixin cross($hover: null) {
 	@include svg;
 	background-image: url(assets/cross.svg);
+	@if ($hover) {
+		opacity: 0.5;
+	}
 }
-@mixin circle {
+@mixin circle($hover: null) {
 	@include svg;
 	background-image: url(assets/circle.svg);
+	@if ($hover) {
+		opacity: 0.5;
+	}
 }
 
 .container {
@@ -36,11 +42,11 @@ $cell-background: center/70% no-repeat;
 			background-color: white;
 
 			&.cross .cell-hover:hover {
-				@include cross;
+				@include cross(hover);
 				opacity: 0.5;
 			}
-			&.circle .cell:not(.cross):not(.circle):hover {
-				@include circle;
+			&.circle .cell-hover:hover {
+				@include circle(hover);
 				opacity: 0.5;
 			}
 

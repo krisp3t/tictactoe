@@ -8,14 +8,13 @@ cellElements.forEach((cell) => {
 });
 
 function handleClick(e) {
-	const cell = e.target;
+	const cell = e.currentTarget;
 	const currentClass = crossTurn ? CROSS_CLASS : CIRCLE_CLASS;
 	draw(cell, currentClass);
 	switchTurns();
 }
 
 function draw(cell, currentClass) {
-	console.log(cell, currentClass); //test
 	cell.classList.add(currentClass);
 }
 
