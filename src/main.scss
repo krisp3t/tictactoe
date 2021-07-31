@@ -20,6 +20,12 @@ $cell-background: center/70% no-repeat;
 	}
 }
 
+body {
+	font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+		Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
 .container {
 	width: 100vw;
 	height: 100vh;
@@ -31,6 +37,9 @@ $cell-background: center/70% no-repeat;
 		@if $enable-shadows {
 			box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
 		}
+		&.blur {
+			filter: blur(1px);
+		}
 
 		.board {
 			display: grid;
@@ -41,11 +50,11 @@ $cell-background: center/70% no-repeat;
 			grid-template-columns: repeat(3, auto);
 			background-color: white;
 
-			&.cross .cell-hover:hover {
+			&.cross .cell:not(.cross):not(.circle) .cell-hover:hover {
 				@include cross(hover);
 				opacity: 0.5;
 			}
-			&.circle .cell-hover:hover {
+			&.circle .cell:not(.cross):not(.circle) .cell-hover:hover {
 				@include circle(hover);
 				opacity: 0.5;
 			}
@@ -92,4 +101,32 @@ $cell-background: center/70% no-repeat;
 
 .game-end {
 	display: none;
+}
+.game-end.show {
+	display: flex;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
+	background-color: rgba(0, 0, 0, 0.5);
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
+
+	.container {
+		width: 50%;
+		margin: auto;
+		display: flex;
+		flex-direction: column;
+
+		.card {
+			background-color: white;
+			display: flex;
+			flex-direction: column;
+			padding: 0.5rem 1rem 1.25rem;
+			box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
+			border: 1px solid rgba(0, 0, 0, 0.5);
+		}
+	}
 }

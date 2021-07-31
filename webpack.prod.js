@@ -1,9 +1,9 @@
 const path = require("path");
 const common = require("./webpack.common");
 const { merge } = require("webpack-merge");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const ESLintPlugin = require("eslint-webpack-plugin");
 
 module.exports = merge(common, {
 	mode: "production",
@@ -11,7 +11,7 @@ module.exports = merge(common, {
 		path: path.resolve(__dirname, "dist"),
 		filename: "[name].[contenthash].bundle.js",
 	},
-	plugins: [new CleanWebpackPlugin()],
+	plugins: [new CleanWebpackPlugin(), new ESLintPlugin()],
 	module: {
 		rules: [
 			{
