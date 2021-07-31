@@ -19,6 +19,8 @@ const CIRCLE_CLASS = "circle";
 // HTML elements
 const cellElements = document.querySelectorAll("[data-cell]");
 const board = document.getElementById("board");
+const boardContainer = document.querySelector(".board-container");
+const gameEnd = document.getElementById("gameEnd");
 const gameEndText = document.querySelector("[data-game-end-text]");
 
 startGame();
@@ -66,7 +68,6 @@ function checkWin(currentClass) {
 	return WIN_COMBINATIONS.some((combination) => {
 		// at least 1 of the combinations
 		return combination.every((index) => {
-			//
 			return cellElements[index].classList.contains(currentClass);
 		});
 	});
@@ -83,9 +84,11 @@ function checkDraw() {
 }
 
 function endGame(draw = false) {
+	gameEnd.classList.add("show");
+	boardContainer.classList.add("blur");
 	if (draw) {
-		gameEndText.innerHTML = "draw";
+		gameEndText.innerHTML = "It's a draw!";
 	} else {
-		gameEndText.innerHTML = "win";
+		gameEndText.innerHTML = crossTurn ? "❌" : "⭕" + " wins";
 	}
 }
