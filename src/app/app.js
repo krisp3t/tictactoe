@@ -22,15 +22,22 @@ const board = document.getElementById("board");
 const boardContainer = document.querySelector(".board-container");
 const gameEnd = document.getElementById("gameEnd");
 const gameEndText = document.querySelector("[data-game-end-text]");
+const restartButton = document.getElementById("restartButton");
 
 startGame();
+restartButton.addEventListener("click", startGame);
 
 function startGame() {
 	crossTurn = true;
 	cellElements.forEach((cell) => {
+		cell.classList.remove(CROSS_CLASS);
+		cell.classList.remove(CIRCLE_CLASS);
+		cell.removeEventListener("click", handleClick);
 		cell.addEventListener("click", handleClick, { once: true });
 	});
 	setHover();
+	gameEnd.classList.remove("show");
+	boardContainer.classList.remove("blur");
 }
 
 function setHover() {
@@ -45,10 +52,8 @@ function handleClick(e) {
 	drawCell(cell, currentClass);
 
 	if (checkWin(currentClass)) {
-		console.log("win"); //test
 		endGame();
 	} else if (checkDraw()) {
-		console.log("draw"); //test
 		endGame(true);
 	} else {
 		switchTurns();
@@ -89,6 +94,6 @@ function endGame(draw = false) {
 	if (draw) {
 		gameEndText.innerHTML = "It's a draw!";
 	} else {
-		gameEndText.innerHTML = crossTurn ? "❌" : "⭕" + " wins";
+		gameEndText.innerHTML = `${crossTurn ? "❌" : "⭕"} wins`;
 	}
 }
