@@ -23,6 +23,13 @@ const boardContainer = document.querySelector(".board-container");
 const gameEnd = document.getElementById("gameEnd");
 const gameEndText = document.querySelector("[data-game-end-text]");
 const restartButton = document.getElementById("restartButton");
+// SVG
+const svgCross = `<svg class="mark">
+<use href="cross"></use>
+</svg>`;
+const svgCircle = `<svg class="mark">
+<use href="circle"></use>
+</svg>`;
 
 startGame();
 restartButton.addEventListener("click", startGame);
@@ -63,6 +70,11 @@ function handleClick(e) {
 
 function drawCell(cell, currentClass) {
 	cell.classList.add(currentClass);
+	cell.insertAdjacentHTML("afterbegin", svg);
+}
+
+function createSvg(currentClass) {
+	return;
 }
 
 function switchTurns() {

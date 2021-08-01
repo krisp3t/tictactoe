@@ -1,26 +1,12 @@
-$cell-size: calc(max(80px, 7vw));
-$enable-shadows: true;
-$cell-background: center/70% no-repeat;
+$cell-size: calc(max(80px, 15vh));
 
-@mixin svg {
-	background: $cell-background;
-}
-@mixin cross($hover: null) {
-	@include svg;
-	// background-image: url(assets/cross.svg);
-	filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg)
-		brightness(104%) contrast(97%); // convert from black to red
-	@if ($hover) {
-		opacity: 0.5;
-	}
-}
-@mixin circle($hover: null) {
-	@include svg;
-	// background-image: url(assets/circle.svg);
-	filter: invert(32%) sepia(27%) saturate(5161%) hue-rotate(215deg)
-		brightness(102%) contrast(101%); // convert from black to blue
-	@if ($hover) {
-		opacity: 0.5;
+@mixin center($display: null) {
+	align-items: center;
+	align-content: center;
+	justify-content: center;
+	justify-items: center;
+	@if ($display) {
+		display: $display;
 	}
 }
 
@@ -33,47 +19,26 @@ body {
 .container {
 	width: 100vw;
 	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	@include center(flex);
 
 	.board-container {
-		@if $enable-shadows {
-			box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
-		}
+		box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
 		&.blur {
 			filter: blur(1px);
 		}
 
 		.board {
-			display: grid;
-			justify-content: center;
-			align-content: center;
-			justify-items: center;
-			align-items: center;
+			@include center(grid);
 			grid-template-columns: repeat(3, auto);
-			background-color: white;
-
-			&.cross .cell:not(.cross):not(.circle) .cell-hover:hover {
-				@include cross(hover);
-				opacity: 0.5;
-			}
-			&.circle .cell:not(.cross):not(.circle) .cell-hover:hover {
-				@include circle(hover);
-				opacity: 0.5;
-			}
+			background-color: #fff;
 
 			.cell {
 				width: $cell-size;
 				height: $cell-size;
 				border: 1px solid #000;
 				cursor: pointer;
-
-				.cell-hover {
-					// fix for opacity affecting border
-					width: 100%;
-					height: 100%;
-				}
+				display: flex;
+				@include center;
 
 				// Remove outer borders
 				&:nth-child(n + 1):nth-child(-n + 3) {
@@ -92,11 +57,9 @@ body {
 				}
 
 				// Drawn cells
-				&.cross {
-					@include cross;
-				}
-				&.circle {
-					@include circle;
+				svg.mark {
+					height: 75%;
+					fill: blue;
 				}
 			}
 		}
@@ -107,16 +70,14 @@ body {
 	display: none;
 }
 .game-end.show {
-	display: flex;
+	@include center(flex);
+	flex-direction: column;
 	position: fixed;
 	top: 0;
 	left: 0;
 	height: 100vh;
 	width: 100vw;
 	background-color: rgba(0, 0, 0, 0.5);
-	flex-direction: column;
-	justify-content: center;
-	align-content: center;
 	font-size: 1.25rem;
 
 	.container {
@@ -126,7 +87,7 @@ body {
 		flex-direction: column;
 
 		.card {
-			background-color: white;
+			background-color: #fff;
 			display: flex;
 			flex-direction: column;
 			padding: 0.3rem 1rem 1.25rem;
