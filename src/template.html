@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<div class="container" id="container">
-			<div class="board-container">
+			<div class="board-container blur">
 				<div class="board cross" id="board">
 					<div class="cell" data-cell></div>
 					<div class="cell" data-cell></div>
@@ -19,6 +19,27 @@
 					<div class="cell" data-cell></div>
 					<div class="cell" data-cell></div>
 					<div class="cell" data-cell></div>
+				</div>
+			</div>
+		</div>
+		<div class="setup show" id="setup" class="show">
+			<div class="container">
+				<div class="card">
+					<form id="setupForm">
+						<label for="currentLang">Language:</label>
+						<select name="currentLang" id="currentLang">
+							<option value="en">🇬🇧 English</option>
+							<option value="de">🇩🇪 Deutsch</option>
+							<option value="sl">🇸🇮 Slovenščina</option>
+							<option value="hr">🇭🇷 Hrvatski</option>
+							<option value="sr">🇷🇸 Српски</option>
+						</select>
+						<label for="player1">Player 1:</label>
+						<input type="text" id="player1" name="player1" />
+						<label for="player2">Player 2:</label>
+						<input type="text" id="player2" name="player2" />
+						<button id="submitButton">Start game</button>
+					</form>
 				</div>
 			</div>
 		</div>

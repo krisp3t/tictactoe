@@ -66,9 +66,11 @@ body {
 	}
 }
 
+.setup,
 .game-end {
 	display: none;
 }
+.setup.show,
 .game-end.show {
 	@include center(flex);
 	flex-direction: column;
@@ -94,5 +96,10 @@ body {
 			box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
 			border: 1px solid rgba(0, 0, 0, 0.5);
 		}
+	}
+}
+
+.setup {
+	input.submit {
 	}
 }

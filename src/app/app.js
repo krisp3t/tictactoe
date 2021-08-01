@@ -12,33 +12,66 @@ const WIN_COMBINATIONS = [
 	[2, 4, 6],
 ];
 Object.freeze(WIN_COMBINATIONS);
-let crossTurn;
-let currentLang = "sr";
+const game = {
+	crossTurn: "cross",
+	currentLang: "en",
+	player1: {
+		name: "",
+		color: "",
+	},
+	player2: {
+		name: "",
+		color: "",
+	},
+};
 // CSS classes
 const CROSS_CLASS = "cross";
 const CIRCLE_CLASS = "circle";
 // HTML elements
+const setup = document.getElementById("setup");
+const setupForm = document.getElementById("setupForm");
+const submitButton = document.getElementById("submitButton");
+
 const cellElements = document.querySelectorAll("[data-cell]");
 const board = document.getElementById("board");
 const boardContainer = document.querySelector(".board-container");
+
 const gameEnd = document.getElementById("gameEnd");
 const gameEndText = document.querySelector("[data-game-end-text]");
 const restartButton = document.getElementById("restartButton");
-// SVG
-function passSvg(currentClass) {
-	return `<svg class="mark">
-	<use href="#${currentClass}"></use>
-	</svg>`;
-}
+
 // Game strings
 const text = {
+	setup: {
+		currentLang: {
+			en: "Language",
+			de: "Sprache",
+			sl: "Jezik",
+			hr: "Jezik",
+			sr: "Језик",
+		},
+		player: {
+			en: "Player",
+			de: "Spieler",
+			sl: "Igralec",
+			hr: "Igrač",
+			sr: "Играч",
+		},
+		submitButton: {
+			en: "Start game",
+			de: "Spiel beginnen",
+			sl: "Začni igro",
+			hr: "Započni igru",
+			sr: "Започни игру",
+		},
+	},
 	gameEnd: {
 		win: {
-			en: `${crossTurn ? "❌" : "⭕"} wins!`,
-			de: `${crossTurn ? "❌" : "⭕"} gewinnt!`,
-			sl: `${crossTurn ? "❌" : "⭕"} je zmagal!`,
-			hr: `${crossTurn ? "❌" : "⭕"} je pobijedio!`,
-			sr: `${crossTurn ? "❌" : "⭕"} је победио!`,
+			en: `${game.crossTurn ? "❌" : "⭕"} wins!`,
+			de: `${game.crossTurn ? "❌" : "⭕"} gewinnt!`,
+			sl: `${game.crossTurn ? "❌" : "⭕"} je zmagal!`,
+			hr: `${game.crossTurn ? "❌" : "⭕"} je pobijedio!`,
+			sr: `${game.crossTurn ? "❌" : "⭕"} је победио!`,
 		},
 		draw: {
 			en: "It's a draw!",
@@ -58,12 +91,49 @@ const text = {
 };
 
 // At load
-startGame();
+stringSetup();
+setupForm.addEventListener("submit", (e) => {
+	e.preventDefault();
+	const data = Object.fromEntries(new FormData(setupForm));
+	[game.currentLang, game.player1.name, game.player2.name] = [
+		data.currentLang,
+		data.player1,
+		data.player2,
+	];
+	setup.classList.remove("show");
+	startGame();
+});
+setupForm
+	.querySelector("select#currentLang")
+	.addEventListener("change", () =>
+		stringSetup(setupForm.querySelector("select#currentLang").value)
+	);
 restartButton.addEventListener("click", startGame);
-restartButton.innerHTML = text.gameEnd["restart"][currentLang];
+
+// String setup
+function stringSetup(lang = game.currentLang) {
+	restartButton.innerHTML = text["gameEnd"]["restart"][lang];
+	setupForm.querySelector('label[for="currentLang"]').innerHTML =
+		text["setup"]["currentLang"][lang];
+	setupForm.querySelector(
+		'label[for="player1"]'
+	).innerHTML = `${text["setup"]["player"][lang]} 1`;
+	setupForm.querySelector(
+		'label[for="player2"]'
+	).innerHTML = `${text["setup"]["player"][lang]} 2`;
+	setupForm.querySelector("#submitButton").innerHTML =
+		text["setup"]["submitButton"][lang];
+}
+
+// SVG
+function passSvg(currentClass) {
+	return `<svg class="mark">
+	<use href="#${currentClass}"></use>
+	</svg>`;
+}
 
 function startGame() {
-	crossTurn = true;
+	game.crossTurn = true;
 	cellElements.forEach((cell) => {
 		cell.classList.remove(CROSS_CLASS);
 		cell.classList.remove(CIRCLE_CLASS);
@@ -79,12 +149,12 @@ function startGame() {
 function setHover() {
 	board.classList.remove(CROSS_CLASS);
 	board.classList.remove(CIRCLE_CLASS);
-	board.classList.add(crossTurn ? CROSS_CLASS : CIRCLE_CLASS);
+	board.classList.add(game.crossTurn ? CROSS_CLASS : CIRCLE_CLASS);
 }
 
 function handleClick(e) {
 	const cell = e.currentTarget; // clicked cell
-	const currentClass = crossTurn ? CROSS_CLASS : CIRCLE_CLASS;
+	const currentClass = game.crossTurn ? CROSS_CLASS : CIRCLE_CLASS;
 	drawCell(cell, currentClass);
 
 	if (checkWin(currentClass)) {
@@ -103,7 +173,7 @@ function drawCell(cell, currentClass) {
 }
 
 function switchTurns() {
-	crossTurn = !crossTurn;
+	game.crossTurn = !game.crossTurn;
 }
 
 function checkWin(currentClass) {
@@ -128,5 +198,6 @@ function checkDraw() {
 function endGame(draw = false) {
 	gameEnd.classList.add("show");
 	boardContainer.classList.add("blur");
-	gameEndText.innerHTML = text.gameEnd[draw ? "draw" : "win"][currentLang];
+	gameEndText.innerHTML =
+		text["gameEnd"][draw ? "draw" : "win"][game.currentLang];
 }
