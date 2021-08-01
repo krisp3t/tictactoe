@@ -128,9 +128,5 @@ function checkDraw() {
 function endGame(draw = false) {
 	gameEnd.classList.add("show");
 	boardContainer.classList.add("blur");
-	if (draw) {
-		gameEndText.innerHTML = text.gameEnd["win"][currentLang];
-	} else {
-		gameEndText.innerHTML = text.gameEnd["draw"][currentLang];
-	}
+	gameEndText.innerHTML = text.gameEnd[draw ? "draw" : "win"][currentLang];
 }
