@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const SpriteLoaderPlugin = require("svg-sprite-loader/plugin");
 
 module.exports = {
 	entry: {
@@ -9,6 +10,7 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: "./src/template.html",
 		}),
+		new SpriteLoaderPlugin(),
 	],
 	module: {
 		rules: [
@@ -17,8 +19,12 @@ module.exports = {
 				use: ["html-loader"],
 			},
 			{
-				test: /\.(png|svg|jpg|jpeg|gif)$/,
+				test: /\.(png|jpg|jpeg|gif)$/,
 				type: "asset",
+			},
+			{
+				test: /\.svg$/,
+				use: ["svg-sprite-loader", "svgo-loader"],
 			},
 		],
 	},

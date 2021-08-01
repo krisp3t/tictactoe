@@ -7,7 +7,7 @@ $cell-background: center/70% no-repeat;
 }
 @mixin cross($hover: null) {
 	@include svg;
-	background-image: url(assets/cross.svg);
+	// background-image: url(assets/cross.svg);
 	filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg)
 		brightness(104%) contrast(97%); // convert from black to red
 	@if ($hover) {
@@ -16,7 +16,7 @@ $cell-background: center/70% no-repeat;
 }
 @mixin circle($hover: null) {
 	@include svg;
-	background-image: url(assets/circle.svg);
+	// background-image: url(assets/circle.svg);
 	filter: invert(32%) sepia(27%) saturate(5161%) hue-rotate(215deg)
 		brightness(102%) contrast(101%); // convert from black to blue
 	@if ($hover) {
