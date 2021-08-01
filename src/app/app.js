@@ -13,6 +13,7 @@ const WIN_COMBINATIONS = [
 ];
 Object.freeze(WIN_COMBINATIONS);
 let crossTurn;
+let currentLang = "sr";
 // CSS classes
 const CROSS_CLASS = "cross";
 const CIRCLE_CLASS = "circle";
@@ -24,17 +25,42 @@ const gameEnd = document.getElementById("gameEnd");
 const gameEndText = document.querySelector("[data-game-end-text]");
 const restartButton = document.getElementById("restartButton");
 // SVG
-const svgCross = passSvg("cross");
-const svgCircle = passSvg("circle");
 function passSvg(currentClass) {
 	return `<svg class="mark">
 	<use href="#${currentClass}"></use>
 	</svg>`;
 }
+// Game strings
+const text = {
+	gameEnd: {
+		win: {
+			en: `${crossTurn ? "❌" : "⭕"} wins!`,
+			de: `${crossTurn ? "❌" : "⭕"} gewinnt!`,
+			sl: `${crossTurn ? "❌" : "⭕"} je zmagal!`,
+			hr: `${crossTurn ? "❌" : "⭕"} je pobijedio!`,
+			sr: `${crossTurn ? "❌" : "⭕"} је победио!`,
+		},
+		draw: {
+			en: "It's a draw!",
+			de: "Es steht unentschieden!",
+			sl: "Neodločeno je!",
+			hr: "Neriješeno je!",
+			sr: "Нерешено је!",
+		},
+		restart: {
+			en: "New game",
+			de: "Neues Spiel",
+			sl: "Nova igra",
+			hr: "Nova igra",
+			sr: "Нова игра",
+		},
+	},
+};
 
 // At load
 startGame();
 restartButton.addEventListener("click", startGame);
+restartButton.innerHTML = text.gameEnd["restart"][currentLang];
 
 function startGame() {
 	crossTurn = true;
@@ -103,8 +129,8 @@ function endGame(draw = false) {
 	gameEnd.classList.add("show");
 	boardContainer.classList.add("blur");
 	if (draw) {
-		gameEndText.innerHTML = "It's a draw!";
+		gameEndText.innerHTML = text.gameEnd["win"][currentLang];
 	} else {
-		gameEndText.innerHTML = `${crossTurn ? "❌" : "⭕"} wins`;
+		gameEndText.innerHTML = text.gameEnd["draw"][currentLang];
 	}
 }
