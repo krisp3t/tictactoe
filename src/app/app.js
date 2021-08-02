@@ -13,7 +13,8 @@ const WIN_COMBINATIONS = [
 ];
 Object.freeze(WIN_COMBINATIONS);
 const game = {
-	crossTurn: "cross",
+	crossTurn: true,
+	crossPlayer: "player1",
 	currentLang: "en",
 	player1: {
 		name: "Player 1",
@@ -191,8 +192,28 @@ function startGame() {
 	setHover();
 	gameEnd.classList.remove("show");
 	boardContainer.classList.remove("blur");
+	// Insert CSS for coloring SVGs based on player choice and cross/circle
+	insertStylesheet(
+		`.board .cell.cross svg {fill:${
+			game.crossPlayer === "player1"
+				? game.player1.color
+				: game.player2.color
+		}}", 0`
+	);
+	insertStylesheet(
+		`.board .cell.circle svg {fill:${
+			game.crossPlayer === "player1"
+				? game.player2.color
+				: game.player1.color
+		}}", 0`
+	);
 }
 
+function insertStylesheet(css) {
+	const style = document.createElement("style");
+	style.innerHTML = css;
+	document.head.appendChild(style);
+}
 function setHover() {
 	board.classList.remove(CROSS_CLASS);
 	board.classList.remove(CIRCLE_CLASS);
