@@ -12,28 +12,74 @@ const WIN_COMBINATIONS = [
 	[2, 4, 6],
 ];
 Object.freeze(WIN_COMBINATIONS);
-const game = {
-	crossTurn: true,
-	crossPlayer: "player1",
-	currentLang: "en",
-	player1: {
-		name: "Player 1",
-		color: "red",
-	},
-	player2: {
-		name: "Player 2",
-		color: "blue",
-	},
-	setColor: function (player, color) {
+class Game {
+	constructor() {
+		this.crossTurn = true;
+		this.player1Turn = true;
+		this.currentLang = "en";
+		this.player1 = {
+			name: "Player 1",
+			color: "red",
+			wins: 0,
+		};
+		this.player2 = {
+			name: "Player 2",
+			color: "blue",
+			wins: 0,
+		};
+	}
+	setColor(player, color) {
 		this[player]["color"] = color;
-	},
-};
+	}
+	setName(player, name) {
+		this[player]["name"] = name;
+	}
+	switchTurns() {
+		this.player1Turn = !this.player1Turn;
+		this.crossTurn = !this.crossTurn;
+	}
+	switchPlayers() {
+		this.crossTurn = true;
+		this.player1Turn = this.player1.wins + (this.player2.wins % 2) === 0;
+		removeStylesheet();
+	}
+	colorPlayers() {
+		insertStylesheet(
+			`.board .cell.cross svg {fill:${
+				game.player1Turn ? game.player1.color : game.player2.color
+			}}", 0`
+		);
+		insertStylesheet(
+			`.board .cell.circle svg {fill:${
+				game.player1Turn ? game.player2.color : game.player1.color
+			}}", 0`
+		);
+	}
+	getPlayerTurn() {
+		return this.player1Turn;
+	}
+	getCrossTurn() {
+		return this.crossTurn;
+	}
+	getColor(player) {
+		return this[player]["color"];
+	}
+	getWins(player) {
+		return this[player]["wins"];
+	}
+}
+
+export const game = new Game();
+console.log(game);
+// import text from "./text";
+
 // CSS classes
 const CROSS_CLASS = "cross";
 const CIRCLE_CLASS = "circle";
 // HTML elements
 const setupContainer = document.getElementById("setup");
 const setupForm = document.getElementById("setupForm");
+const currentLang = document.getElementById("currentLang");
 const player1Colors = document.querySelectorAll(
 	".color-row svg[player='player1']"
 );
@@ -51,58 +97,10 @@ const gameEndText = document.querySelector("[data-game-end-text]");
 const restartButton = document.getElementById("restartButton");
 
 // Game strings
-const text = {
-	setup: {
-		currentLang: {
-			en: "Language",
-			de: "Sprache",
-			sl: "Jezik",
-			hr: "Jezik",
-			sr: "Језик",
-		},
-		player: {
-			en: "Player",
-			de: "Spieler",
-			sl: "Igralec",
-			hr: "Igrač",
-			sr: "Играч",
-		},
-		submitButton: {
-			en: "Start game",
-			de: "Spiel beginnen",
-			sl: "Začni igro",
-			hr: "Započni igru",
-			sr: "Започни игру",
-		},
-	},
-	gameEnd: {
-		win: {
-			en: `${game.crossTurn ? "❌" : "⭕"} wins!`,
-			de: `${game.crossTurn ? "❌" : "⭕"} gewinnt!`,
-			sl: `${game.crossTurn ? "❌" : "⭕"} je zmagal!`,
-			hr: `${game.crossTurn ? "❌" : "⭕"} je pobijedio!`,
-			sr: `${game.crossTurn ? "❌" : "⭕"} је победио!`,
-		},
-		draw: {
-			en: "It's a draw!",
-			de: "Es steht unentschieden!",
-			sl: "Neodločeno je!",
-			hr: "Neriješeno je!",
-			sr: "Нерешено је!",
-		},
-		restart: {
-			en: "New game",
-			de: "Neues Spiel",
-			sl: "Nova igra",
-			hr: "Nova igra",
-			sr: "Нова игра",
-		},
-	},
-};
 
 // At load
 stringSetup();
-restartButton.addEventListener("click", startGame); // end game restart button
+restartButton.addEventListener("click", restartGame); // end game restart button
 setupGame();
 
 // Setup game form
@@ -123,10 +121,8 @@ function setupGame() {
 	startGameButton.addEventListener("click", (e) => {
 		e.preventDefault(); // prevent refresh
 		const inputData = Object.fromEntries(new FormData(setupForm));
-		[game.player1.name, game.player2.name] = [
-			inputData.player1,
-			inputData.player2,
-		];
+		game.setName("player1", inputData.player1);
+		game.setName("player2", inputData.player2);
 		setupContainer.classList.remove("show");
 		startGame();
 	});
@@ -147,7 +143,7 @@ function setupGame() {
 	function setPlayerColor(player, e) {
 		const opponent = player === "player1" ? "player2" : "player1";
 		const row = player === "player1" ? player1Colors : player2Colors;
-		if (game[opponent]["color"] !== e.currentTarget.getAttribute("color")) {
+		if (game.getColor(opponent) !== e.currentTarget.getAttribute("color")) {
 			updateWarning();
 			game.setColor(player, e.currentTarget.getAttribute("color"));
 			row.forEach((color) => color.classList.remove("selected"));
@@ -180,8 +176,7 @@ function passSvg(currentClass) {
 }
 
 function startGame() {
-	console.log(game); //test
-	game.crossTurn = true;
+	game.colorPlayers();
 	cellElements.forEach((cell) => {
 		cell.classList.remove(CROSS_CLASS);
 		cell.classList.remove(CIRCLE_CLASS);
@@ -192,37 +187,27 @@ function startGame() {
 	setHover();
 	gameEnd.classList.remove("show");
 	boardContainer.classList.remove("blur");
-	// Insert CSS for coloring SVGs based on player choice and cross/circle
-	insertStylesheet(
-		`.board .cell.cross svg {fill:${
-			game.crossPlayer === "player1"
-				? game.player1.color
-				: game.player2.color
-		}}", 0`
-	);
-	insertStylesheet(
-		`.board .cell.circle svg {fill:${
-			game.crossPlayer === "player1"
-				? game.player2.color
-				: game.player1.color
-		}}", 0`
-	);
 }
 
 function insertStylesheet(css) {
-	const style = document.createElement("style");
-	style.innerHTML = css;
-	document.head.appendChild(style);
+	const svgStyle = document.createElement("style");
+	svgStyle.setAttribute("id", "svgStyle");
+	svgStyle.innerHTML = css;
+	document.head.appendChild(svgStyle);
 }
+function removeStylesheet() {
+	document.head.removeChild(document.getElementById("svgStyle"));
+}
+
 function setHover() {
-	board.classList.remove(CROSS_CLASS);
-	board.classList.remove(CIRCLE_CLASS);
-	board.classList.add(game.crossTurn ? CROSS_CLASS : CIRCLE_CLASS);
+	// board.classList.remove(CROSS_CLASS);
+	// board.classList.remove(CIRCLE_CLASS);
+	// board.classList.add(game.crossTurn ? CROSS_CLASS : CIRCLE_CLASS);
 }
 
 function handleClick(e) {
 	const cell = e.currentTarget; // clicked cell
-	const currentClass = game.crossTurn ? CROSS_CLASS : CIRCLE_CLASS;
+	const currentClass = game.getCrossTurn() ? CROSS_CLASS : CIRCLE_CLASS;
 	drawCell(cell, currentClass);
 
 	if (checkWin(currentClass)) {
@@ -230,7 +215,7 @@ function handleClick(e) {
 	} else if (checkDraw()) {
 		endGame(true);
 	} else {
-		switchTurns();
+		game.switchTurns();
 		setHover();
 	}
 }
@@ -238,10 +223,6 @@ function handleClick(e) {
 function drawCell(cell, currentClass) {
 	cell.classList.add(currentClass);
 	cell.insertAdjacentHTML("afterbegin", passSvg(currentClass));
-}
-
-function switchTurns() {
-	game.crossTurn = !game.crossTurn;
 }
 
 function checkWin(currentClass) {
@@ -266,6 +247,10 @@ function checkDraw() {
 function endGame(draw = false) {
 	gameEnd.classList.add("show");
 	boardContainer.classList.add("blur");
-	gameEndText.innerHTML =
-		text["gameEnd"][draw ? "draw" : "win"][game.currentLang];
+	// gameEndText.innerHTML =  text["gameEnd"][draw ? "draw" : "win"][game.currentLang];
+}
+
+function restartGame() {
+	game.switchPlayers();
+	startGame();
 }
