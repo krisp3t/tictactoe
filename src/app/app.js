@@ -23,13 +23,18 @@ const game = {
 		name: "",
 		color: "",
 	},
+	setColor: function (player, color) {
+		this[player]["color"] = color;
+	},
 };
 // CSS classes
 const CROSS_CLASS = "cross";
 const CIRCLE_CLASS = "circle";
 // HTML elements
-const setup = document.getElementById("setup");
+const setupContainer = document.getElementById("setup");
 const setupForm = document.getElementById("setupForm");
+const player1Colors = document.querySelectorAll(".player1 svg.color");
+const player2Colors = document.querySelectorAll(".player2 svg.color");
 
 const cellElements = document.querySelectorAll("[data-cell]");
 const board = document.getElementById("board");
@@ -91,35 +96,45 @@ const text = {
 
 // At load
 stringSetup();
-setupForm.addEventListener("submit", (e) => {
-	console.log("i"); //test
-	e.preventDefault();
-	// [game.currentLang, game.player1.name, game.player2.name] = [
-	// 	setupForm.querySelector(#)
-	// ];
-	setup.classList.remove("show");
-	startGame();
-});
-setupForm
-	.querySelector("select#currentLang")
-	.addEventListener("change", () =>
-		stringSetup(setupForm.querySelector("select#currentLang").value)
-	);
-restartButton.addEventListener("click", startGame);
+restartButton.addEventListener("click", startGame); // end game restart button
+setupGame();
 
-// String setup
+function setupGame() {
+	player1Colors.forEach((color) => {
+		color.addEventListener("click", (e) =>
+			game.setColor("player1", e.currentTarget.getAttribute("color"))
+		);
+	});
+	player2Colors.forEach((color) => {
+		color.addEventListener("click", (e) =>
+			game.setColor("player2", e.currentTarget.getAttribute("color"))
+		);
+	});
+	setupForm.addEventListener("submit", (e) => {
+		e.preventDefault(); // prevent refresh
+		const inputData = Object.fromEntries(new FormData(setupForm));
+		console.log(inputData); // test
+		[game.player1.name, game.player2.name] = [
+			inputData.player1,
+			inputData.player2,
+		];
+		setupContainer.classList.remove("show");
+		startGame();
+	});
+}
+
 function stringSetup(lang = game.currentLang) {
-	restartButton.innerHTML = text["gameEnd"]["restart"][lang];
-	setupForm.querySelector('label[for="currentLang"]').innerHTML =
-		text["setup"]["currentLang"][lang];
-	setupForm.querySelector(
-		'label[for="player1"]'
-	).innerHTML = `${text["setup"]["player"][lang]} 1`;
-	setupForm.querySelector(
-		'label[for="player2"]'
-	).innerHTML = `${text["setup"]["player"][lang]} 2`;
-	setupForm.querySelector("#submitButton").innerHTML =
-		text["setup"]["submitButton"][lang];
+	// restartButton.innerHTML = text["gameEnd"]["restart"][lang];
+	// setupForm.querySelector('label[for="currentLang"]').innerHTML =
+	// 	text["setup"]["currentLang"][lang];
+	// setupForm.querySelector(
+	// 	'label[for="player1"]'
+	// ).innerHTML = `${text["setup"]["player"][lang]} 1`;
+	// setupForm.querySelector(
+	// 	'label[for="player2"]'
+	// ).innerHTML = `${text["setup"]["player"][lang]} 2`;
+	// setupForm.querySelector("#submitButton").innerHTML =
+	// 	text["setup"]["submitButton"][lang];
 }
 
 // SVG
@@ -130,6 +145,7 @@ function passSvg(currentClass) {
 }
 
 function startGame() {
+	console.log(game); //test
 	game.crossTurn = true;
 	cellElements.forEach((cell) => {
 		cell.classList.remove(CROSS_CLASS);
