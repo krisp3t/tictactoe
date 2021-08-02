@@ -1,6 +1,8 @@
+// Variables
 $cell-size: calc(max(80px, 15vh));
 $player-colors: (red, orange, yellow, lime, green, blue, cyan, pink, purple);
 
+// Mixins
 @mixin center($display: null) {
 	align-items: center;
 	align-content: center;
@@ -11,6 +13,7 @@ $player-colors: (red, orange, yellow, lime, green, blue, cyan, pink, purple);
 	}
 }
 
+// Global
 img.emoji {
 	height: 1em;
 	width: 1em;
@@ -29,7 +32,15 @@ svg.color {
 	&:hover {
 		opacity: 0.6;
 	}
+	&.selected {
+		border: 2px solid #111111;
+	}
 }
+small {
+	font-size: 0.85rem;
+}
+
+// Main container
 .container {
 	width: 100vw;
 	height: 100vh;
@@ -80,6 +91,7 @@ svg.color {
 	}
 }
 
+// Cards
 .setup,
 .game-end {
 	display: none;

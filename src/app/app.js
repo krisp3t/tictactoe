@@ -16,12 +16,12 @@ const game = {
 	crossTurn: "cross",
 	currentLang: "en",
 	player1: {
-		name: "",
-		color: "",
+		name: "Player 1",
+		color: "red",
 	},
 	player2: {
-		name: "",
-		color: "",
+		name: "Player 2",
+		color: "blue",
 	},
 	setColor: function (player, color) {
 		this[player]["color"] = color;
@@ -33,8 +33,13 @@ const CIRCLE_CLASS = "circle";
 // HTML elements
 const setupContainer = document.getElementById("setup");
 const setupForm = document.getElementById("setupForm");
-const player1Colors = document.querySelectorAll(".player1 svg.color");
-const player2Colors = document.querySelectorAll(".player2 svg.color");
+const player1Colors = document.querySelectorAll(
+	".color-row svg[player='player1']"
+);
+const player2Colors = document.querySelectorAll(
+	".color-row svg[player='player2']"
+);
+const startGameButton = document.getElementById("startGameButton");
 
 const cellElements = document.querySelectorAll("[data-cell]");
 const board = document.getElementById("board");
@@ -99,21 +104,24 @@ stringSetup();
 restartButton.addEventListener("click", startGame); // end game restart button
 setupGame();
 
+// Setup game form
 function setupGame() {
+	// Event listeners
 	player1Colors.forEach((color) => {
-		color.addEventListener("click", (e) =>
-			game.setColor("player1", e.currentTarget.getAttribute("color"))
-		);
+		color.addEventListener("click", (e) => {
+			updateWarning();
+			setPlayerColor("player1", e);
+		});
 	});
 	player2Colors.forEach((color) => {
-		color.addEventListener("click", (e) =>
-			game.setColor("player2", e.currentTarget.getAttribute("color"))
-		);
+		color.addEventListener("click", (e) => {
+			updateWarning();
+			setPlayerColor("player2", e);
+		});
 	});
-	setupForm.addEventListener("submit", (e) => {
+	startGameButton.addEventListener("click", (e) => {
 		e.preventDefault(); // prevent refresh
 		const inputData = Object.fromEntries(new FormData(setupForm));
-		console.log(inputData); // test
 		[game.player1.name, game.player2.name] = [
 			inputData.player1,
 			inputData.player2,
@@ -121,6 +129,32 @@ function setupGame() {
 		setupContainer.classList.remove("show");
 		startGame();
 	});
+	// Defaults
+	setupForm
+		.querySelector("svg[color='red'][player='player1']")
+		.dispatchEvent(new MouseEvent("click"));
+	setupForm
+		.querySelector("svg[color='blue'][player='player2']")
+		.dispatchEvent(new MouseEvent("click"));
+
+	function updateWarning(warning = false) {
+		setupForm.querySelector("[warning-text]").innerHTML = warning
+			? "The colors shouldn't match!"
+			: "";
+	}
+
+	function setPlayerColor(player, e) {
+		const opponent = player === "player1" ? "player2" : "player1";
+		const row = player === "player1" ? player1Colors : player2Colors;
+		if (game[opponent]["color"] !== e.currentTarget.getAttribute("color")) {
+			updateWarning();
+			game.setColor(player, e.currentTarget.getAttribute("color"));
+			row.forEach((color) => color.classList.remove("selected"));
+			e.currentTarget.classList.add("selected");
+		} else {
+			updateWarning(true);
+		}
+	}
 }
 
 function stringSetup(lang = game.currentLang) {
