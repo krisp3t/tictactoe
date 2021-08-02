@@ -1,6 +1,6 @@
 import "./main.scss";
-import "./app/app.js";
 import "./app/twemoji.js";
+import "./app/app.js";
 
 // Import SVG
 function requireAll(r) {

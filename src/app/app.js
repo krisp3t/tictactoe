@@ -92,13 +92,11 @@ const text = {
 // At load
 stringSetup();
 setupForm.addEventListener("submit", (e) => {
+	console.log("i"); //test
 	e.preventDefault();
-	const data = Object.fromEntries(new FormData(setupForm));
-	[game.currentLang, game.player1.name, game.player2.name] = [
-		data.currentLang,
-		data.player1,
-		data.player2,
-	];
+	// [game.currentLang, game.player1.name, game.player2.name] = [
+	// 	setupForm.querySelector(#)
+	// ];
 	setup.classList.remove("show");
 	startGame();
 });
@@ -126,7 +124,7 @@ function stringSetup(lang = game.currentLang) {
 
 // SVG
 function passSvg(currentClass) {
-	return `<svg class="mark">
+	return `<svg class="draw">
 	<use href="#${currentClass}"></use>
 	</svg>`;
 }

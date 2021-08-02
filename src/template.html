@@ -22,52 +22,140 @@
 				</div>
 			</div>
 		</div>
-		<div class="setup show" id="setup" class="show">
+		<div class="setup show" id="setup">
 			<div class="container">
-				<div class="card">
+				<div class="card p-4">
 					<form id="setupForm">
 						<div class="dropdown">
 							<button
-								class="btn btn-secondary dropdown-toggle"
+								class="btn btn-secondary dropdown-toggle mb-3"
 								type="button"
-								id="dropdownMenuButton1"
+								id="currentLangSelect"
 								data-bs-toggle="dropdown"
 								aria-expanded="false"
 							>
-								Dropdown button
+								Language
 							</button>
 							<ul
 								class="dropdown-menu"
-								aria-labelledby="dropdownMenuButton1"
+								aria-labelledby="currentLangSelect"
 							>
 								<li>
-									<a class="dropdown-item" href="#">Action</a>
-								</li>
-								<li>
-									<a class="dropdown-item" href="#"
-										>🇬🇧 Another action</a
+									<a class="dropdown-item" href="#" value="en"
+										>🇬🇧 English</a
 									>
 								</li>
 								<li>
-									<a class="dropdown-item" href="#"
-										>Something else here</a
+									<a class="dropdown-item" href="#" value="de"
+										>🇩🇪 Deutsch</a
+									>
+								</li>
+								<li>
+									<a class="dropdown-item" href="#" value="sl"
+										>🇸🇮 Slovenščina</a
+									>
+								</li>
+								<li>
+									<a class="dropdown-item" href="#" value="hr"
+										>🇭🇷 Hrvatski</a
+									>
+								</li>
+								<li>
+									<a class="dropdown-item" href="#" value="sr"
+										>🇷🇸 Српски</a
 									>
 								</li>
 							</ul>
 						</div>
-						<label for="currentLang">Language:</label>
-						<select name="currentLang" id="currentLang">
-							<option value="en">🇬🇧 English</option>
-							<option value="de">🇩🇪 Deutsch</option>
-							<option value="sl">🇸🇮 Slovenščina</option>
-							<option value="hr">🇭🇷 Hrvatski</option>
-							<option value="sr">🇷🇸 Српски</option>
-						</select>
-						<label for="player1">Player 1:</label>
-						<input type="text" id="player1" name="player1" />
-						<label for="player2">Player 2:</label>
-						<input type="text" id="player2" name="player2" />
-						<button id="submitButton">Start game</button>
+						<div class="input-group mb-1">
+							<span class="input-group-text" id="player1"
+								>Player 1</span
+							>
+							<input
+								type="text"
+								class="form-control"
+								placeholder="Name"
+								aria-label="Player 1 name"
+								aria-describedby="player1"
+								name="player1"
+							/>
+						</div>
+						<div class="player1 color-row mb-3">
+							<svg class="color color-red">
+								<use href="#rectangle"></use>
+							</svg>
+							<svg class="color color-orange">
+								<use href="#rectangle"></use>
+							</svg>
+							<svg class="color color-yellow">
+								<use href="#rectangle"></use>
+							</svg>
+							<svg class="color color-lime">
+								<use href="#rectangle"></use>
+							</svg>
+							<svg class="color color-green">
+								<use href="#rectangle"></use>
+							</svg>
+							<svg class="color color-blue">
+								<use href="#rectangle"></use>
+							</svg>
+							<svg class="color color-cyan">
+								<use href="#rectangle"></use>
+							</svg>
+							<svg class="color color-pink">
+								<use href="#rectangle"></use>
+							</svg>
+							<svg class="color color-purple">
+								<use href="#rectangle"></use>
+							</svg>
+						</div>
+						<div class="input-group mb-1">
+							<span class="input-group-text" id="player1"
+								>Player 2</span
+							>
+							<input
+								type="text"
+								class="form-control"
+								placeholder="Name"
+								aria-label="Player 2 name"
+								aria-describedby="player2"
+								name="player2"
+							/>
+						</div>
+						<div class="player2 color-row mb-3">
+							<svg class="color color-red">
+								<use href="#rectangle"></use>
+							</svg>
+							<svg class="color color-orange">
+								<use href="#rectangle"></use>
+							</svg>
+							<svg class="color color-yellow">
+								<use href="#rectangle"></use>
+							</svg>
+							<svg class="color color-lime">
+								<use href="#rectangle"></use>
+							</svg>
+							<svg class="color color-green">
+								<use href="#rectangle"></use>
+							</svg>
+							<svg class="color color-blue">
+								<use href="#rectangle"></use>
+							</svg>
+							<svg class="color color-cyan">
+								<use href="#rectangle"></use>
+							</svg>
+							<svg class="color color-pink">
+								<use href="#rectangle"></use>
+							</svg>
+							<svg class="color color-purple">
+								<use href="#rectangle"></use>
+							</svg>
+						</div>
+						<div class="text-center">
+							<button type="submit" id="submitButton">
+								Start game
+							</button>
+						</div>
 					</form>
 				</div>
 			</div>

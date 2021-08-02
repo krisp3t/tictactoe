@@ -1,4 +1,5 @@
 $cell-size: calc(max(80px, 15vh));
+$player-colors: (red, orange, yellow, lime, green, blue, cyan, pink, purple);
 
 @mixin center($display: null) {
 	align-items: center;
@@ -16,7 +17,19 @@ img.emoji {
 	margin: 0 0.05em 0 0.1em;
 	vertical-align: -0.1em;
 }
-
+svg.color {
+	height: 30px;
+	width: 30px;
+	fill: red;
+	@each $color in $player-colors {
+		&.color-#{$color} {
+			fill: $color;
+		}
+	}
+	&:hover {
+		opacity: 0.6;
+	}
+}
 .container {
 	width: 100vw;
 	height: 100vh;
@@ -58,7 +71,7 @@ img.emoji {
 				}
 
 				// Drawn cells
-				svg.mark {
+				svg.draw {
 					height: 75%;
 					fill: blue;
 				}
@@ -93,14 +106,8 @@ img.emoji {
 			background-color: #fff;
 			display: flex;
 			flex-direction: column;
-			padding: 0.3rem 1rem 1.25rem;
 			box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
 			border: 1px solid rgba(0, 0, 0, 0.5);
 		}
-	}
-}
-
-.setup {
-	input.submit {
 	}
 }
