@@ -23,6 +23,7 @@
 	},
 	"homepage": "https://github.com/krisp3t/tictactoe#readme",
 	"devDependencies": {
+		"bootstrap": "^5.0.2",
 		"clean-webpack-plugin": "^4.0.0-alpha.0",
 		"css-loader": "^6.2.0",
 		"css-minimizer-webpack-plugin": "^3.0.2",
@@ -43,7 +44,7 @@
 		"webpack-merge": "^5.8.0"
 	},
 	"dependencies": {
-		"normalize.css": "^8.0.1",
+		"mini-css-extract-plugin": "^2.1.0",
 		"twemoji": "^13.1.0"
 	}
 }

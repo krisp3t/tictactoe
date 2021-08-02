@@ -30,7 +30,6 @@ const CIRCLE_CLASS = "circle";
 // HTML elements
 const setup = document.getElementById("setup");
 const setupForm = document.getElementById("setupForm");
-const submitButton = document.getElementById("submitButton");
 
 const cellElements = document.querySelectorAll("[data-cell]");
 const board = document.getElementById("board");

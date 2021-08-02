@@ -4,6 +4,8 @@ const { merge } = require("webpack-merge");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = merge(common, {
 	mode: "production",
@@ -11,13 +13,18 @@ module.exports = merge(common, {
 		path: path.resolve(__dirname, "dist"),
 		filename: "[name].[contenthash].bundle.js",
 	},
-	plugins: [new CleanWebpackPlugin(), new ESLintPlugin()],
+	plugins: [
+		new CleanWebpackPlugin(),
+		new ESLintPlugin(),
+		new MiniCssExtractPlugin({ filename: "[name].[contenthash].css" }),
+	],
 	module: {
 		rules: [
 			{
 				test: /\.scss$/,
 				use: [
 					{ loader: "style-loader" },
+					{ loader: MiniCssExtractPlugin.loader },
 					{ loader: "css-loader" },
 					{
 						loader: "postcss-loader",
@@ -36,6 +43,7 @@ module.exports = merge(common, {
 				test: /\.css$/,
 				use: [
 					{ loader: "style-loader" },
+					{ loader: MiniCssExtractPlugin.loader },
 					{ loader: "css-loader" },
 					{
 						loader: "postcss-loader",
@@ -51,6 +59,6 @@ module.exports = merge(common, {
 	},
 	optimization: {
 		minimize: true,
-		minimizer: [new CssMinimizerPlugin()],
+		minimizer: [new CssMinimizerPlugin(), new TerserPlugin()],
 	},
 });
