@@ -14,11 +14,21 @@ $player-colors: (red, orange, gold, lime, green, blue, cyan, pink, purple);
 	}
 }
 // Functions
-@function text-clr($color) {
-	@if (lightness($color) > 50) {
-		@return #000;
+// https://codepen.io/davidhalford/pen/wlDxL
+@function color-contrast($color) {
+	$color-brightness: round(
+		(red($color) * 299) + (green($color) * 587) + (blue($color) * 114) /
+			1000
+	);
+	$light-color: round(
+		(red(#ffffff) * 299) + (green(#ffffff) * 587) + (blue(#ffffff) * 114) /
+			1000
+	);
+
+	@if abs($color-brightness) < ($light-color/2) {
+		@return white;
 	} @else {
-		@return #fff;
+		@return black;
 	}
 }
 
@@ -55,10 +65,10 @@ small {
 	&.show {
 		display: flex;
 	}
-	@each $color in $player-colors {
-		.btn.color-#{$color} {
-			background-color: $color;
-			color: text-clr($color);
+	@each $btn-color in $player-colors {
+		.btn.color-#{$btn-color} {
+			background-color: $btn-color;
+			color: color-contrast($btn-color);
 		}
 	}
 }
