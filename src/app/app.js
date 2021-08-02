@@ -61,11 +61,17 @@ class Game {
 	getCrossTurn() {
 		return this.crossTurn;
 	}
+	getName(player) {
+		return this[player]["name"];
+	}
 	getColor(player) {
 		return this[player]["color"];
 	}
 	getWins(player) {
 		return this[player]["wins"];
+	}
+	getCurrentLang() {
+		return this.currentLang;
 	}
 }
 
@@ -121,9 +127,23 @@ function setupGame() {
 	startGameButton.addEventListener("click", (e) => {
 		e.preventDefault(); // prevent refresh
 		const inputData = Object.fromEntries(new FormData(setupForm));
-		game.setName("player1", inputData.player1);
-		game.setName("player2", inputData.player2);
+		game.setName(
+			"player1",
+			inputData.player1 !== "" ? inputData.player1 : "Player 1"
+		);
+		game.setName(
+			"player2",
+			inputData.player2 !== "" ? inputData.player2 : "Player 2"
+		);
 		setupContainer.classList.remove("show");
+		console.log(document.getElementById("scorebar"));
+		document.getElementById("scorebar").classList.add("show");
+		document
+			.getElementById("player1Score")
+			.classList.add(`color-${game.getColor("player1")}`);
+		document
+			.getElementById("player2Score")
+			.classList.add(`color-${game.getColor("player2")}`);
 		startGame();
 	});
 	// Defaults

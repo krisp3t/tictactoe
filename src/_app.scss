@@ -1,6 +1,7 @@
 // Variables
-$cell-size: calc(max(80px, 15vh));
-$player-colors: (red, orange, yellow, lime, green, blue, cyan, pink, purple);
+// $cell-size: calc(max(80px, 13vh));
+$cell-size: calc(max(80px, 13vh));
+$player-colors: (red, orange, gold, lime, green, blue, cyan, pink, purple);
 
 // Mixins
 @mixin center($display: null) {
@@ -10,6 +11,14 @@ $player-colors: (red, orange, yellow, lime, green, blue, cyan, pink, purple);
 	justify-items: center;
 	@if ($display) {
 		display: $display;
+	}
+}
+// Functions
+@function text-clr($color) {
+	@if (lightness($color) > 50) {
+		@return #000;
+	} @else {
+		@return #fff;
 	}
 }
 
@@ -40,11 +49,25 @@ small {
 	font-size: 0.85rem;
 }
 
+// Scorebar
+.scorebar {
+	display: none;
+	&.show {
+		display: flex;
+	}
+	@each $color in $player-colors {
+		.btn.color-#{$color} {
+			background-color: $color;
+			color: text-clr($color);
+		}
+	}
+}
 // Main container
-.container {
+.box-container {
 	width: 100vw;
-	height: 100vh;
+	height: 90vh;
 	@include center(flex);
+	flex-direction: column;
 
 	.board-container {
 		box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);

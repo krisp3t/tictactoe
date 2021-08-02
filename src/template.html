@@ -7,7 +7,11 @@
 		<title>Tic-Tac-Toe</title>
 	</head>
 	<body>
-		<div class="container" id="container">
+		<div class="scorebar my-3 mx-4 justify-content-between" id="scorebar">
+			<div class="btn" id="player1Score">Score:</div>
+			<div class="btn" id="player2Score">Score:</div>
+		</div>
+		<div class="box-container">
 			<div class="board-container blur">
 				<div class="board cross" id="board">
 					<div class="cell" data-cell></div>
@@ -26,7 +30,7 @@
 			<div class="container">
 				<div class="card p-4">
 					<form id="setupForm">
-						<div class="dropdown">
+						<div class="dropdown" id="currentLang">
 							<button
 								class="btn btn-secondary dropdown-toggle mb-3"
 								type="button"
@@ -96,8 +100,8 @@
 								<use href="#rectangle"></use>
 							</svg>
 							<svg
-								class="color color-yellow"
-								color="yellow"
+								class="color color-gold"
+								color="gold"
 								player="player1"
 							>
 								<use href="#rectangle"></use>
@@ -174,8 +178,8 @@
 								<use href="#rectangle"></use>
 							</svg>
 							<svg
-								class="color color-yellow"
-								color="yellow"
+								class="color color-gold"
+								color="gold"
 								player="player2"
 							>
 								<use href="#rectangle"></use>
