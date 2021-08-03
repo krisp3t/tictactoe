@@ -7,9 +7,12 @@
 		<title>Tic-Tac-Toe</title>
 	</head>
 	<body>
-		<div class="scorebar my-3 mx-4 justify-content-between" id="scorebar">
-			<div class="btn" id="scoreCross">Score:</div>
-			<div class="btn" id="scoreCircle">Score:</div>
+		<div
+			class="scorebar my-3 mx-4 justify-content-between show"
+			id="scorebar"
+		>
+			<div class="btn" id="scoreCross">‏‏‎ ‎‎‎‎‎‎</div>
+			<div class="btn" id="scoreCircle">‏‏‎ ‎</div>
 		</div>
 		<div class="box-container">
 			<div class="board-container blur">
@@ -82,6 +85,7 @@
 								aria-label="Player 1 name"
 								aria-describedby="player1"
 								name="player1"
+								maxlength="24"
 							/>
 						</div>
 						<div class="color-row mb-3">
@@ -150,7 +154,7 @@
 							</svg>
 						</div>
 						<div class="input-group mb-1">
-							<span class="input-group-text" id="player1"
+							<span class="input-group-text" id="player2"
 								>Player 2</span
 							>
 							<input
@@ -160,6 +164,7 @@
 								aria-label="Player 2 name"
 								aria-describedby="player2"
 								name="player2"
+								maxlength="24"
 							/>
 						</div>
 						<div class="color-row mb-1">
@@ -229,7 +234,7 @@
 						</div>
 						<small class="text-danger" warning-text></small>
 						<div class="text-center mt-3">
-							<button id="startGameButton">Start game</button>
+							<button id="startGameButton"></button>
 						</div>
 					</form>
 				</div>
@@ -237,9 +242,11 @@
 		</div>
 		<div class="game-end" id="gameEnd">
 			<div class="container">
-				<div class="card">
+				<div class="card p-4 text-center">
 					<p data-game-end-text></p>
-					<button id="restartButton"></button>
+					<div>
+						<button id="restartButton"></button>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -1,5 +1,4 @@
-import game from "./app.js";
-export const text = {
+const text = {
 	setup: {
 		currentLang: {
 			en: "Language",
@@ -15,21 +14,44 @@ export const text = {
 			hr: "Igrač",
 			sr: "Играч",
 		},
-		submitButton: {
+		name: {
+			en: "Name",
+			de: "Name",
+			sl: "Ime",
+			hr: "Ime",
+			sr: "Име",
+		},
+		startGameButton: {
 			en: "Start game",
 			de: "Spiel beginnen",
 			sl: "Začni igro",
 			hr: "Započni igru",
 			sr: "Започни игру",
 		},
+		warning: {
+			en: "The colors shouldn't match!",
+			de: "Die Farben dürfen nicht übereinstimmen!",
+			sl: "Barvi se ne smeta ujemati!",
+			hr: "Boje se ne smiju podudarati!",
+			sr: "Боје се не смеју подударати!",
+		},
+	},
+	game: {
+		wins: {
+			en: "wins",
+			de: "Siege",
+			sl: "zmag",
+			hr: "pobjeda",
+			sr: "победа",
+		},
 	},
 	gameEnd: {
 		win: {
-			en: `${game.getCrossTurn() ? "❌" : "⭕"} wins!`,
-			de: `${game.getCrossTurn() ? "❌" : "⭕"} gewinnt!`,
-			sl: `${game.getCrossTurn() ? "❌" : "⭕"} je zmagal!`,
-			hr: `${game.getCrossTurn() ? "❌" : "⭕"} je pobijedio!`,
-			sr: `${game.getCrossTurn() ? "❌" : "⭕"} је победио!`,
+			en: `wins!`,
+			de: `gewinnt`,
+			sl: `je zmagal`,
+			hr: `je pobijedio`,
+			sr: `је победио`,
 		},
 		draw: {
 			en: "It's a draw!",
@@ -38,7 +60,7 @@ export const text = {
 			hr: "Neriješeno je!",
 			sr: "Нерешено је!",
 		},
-		restart: {
+		restartButton: {
 			en: "New game",
 			de: "Neues Spiel",
 			sl: "Nova igra",
@@ -47,3 +69,4 @@ export const text = {
 		},
 	},
 };
+module.exports = text; // eslint-disable-line

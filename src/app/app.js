@@ -16,7 +16,7 @@ class Game {
 	constructor() {
 		this.crossTurn = true;
 		this.player1Turn = true;
-		this.currentLang = "en";
+		this.currentLang = "sl";
 		this.player1 = {
 			name: "Player 1",
 			color: "red",
@@ -60,10 +60,14 @@ class Game {
 		const playerSecond = this.player1Turn ? "player2" : "player1";
 		scoreCross.innerHTML = `❌ <em>${this.getName(
 			playerFirst
-		)}:</em> ${this.getWins(playerFirst)} wins`;
+		)}:</em> ${this.getWins(playerFirst)} ${
+			text["game"]["wins"][this.currentLang]
+		}`;
 		scoreCircle.innerHTML = `⭕ <em>${this.getName(
 			playerSecond
-		)}:</em> ${this.getWins(playerSecond)} wins`;
+		)}:</em> ${this.getWins(playerSecond)} ${
+			text["game"]["wins"][this.currentLang]
+		}`;
 		removeClass(scoreCross, "color");
 		removeClass(scoreCircle, "color");
 		scoreCross.classList.add(`color-${this.getColor(playerFirst)}`);
@@ -121,7 +125,7 @@ const gameEnd = document.getElementById("gameEnd");
 const gameEndText = document.querySelector("[data-game-end-text]");
 const restartButton = document.getElementById("restartButton");
 // Game strings
-// import text from "./text";
+const text = require("./text");
 
 // At load
 stringSetup();
@@ -157,11 +161,15 @@ function setupGame() {
 		const inputData = Object.fromEntries(new FormData(setupForm));
 		game.setName(
 			"player1",
-			inputData.player1 !== "" ? inputData.player1 : "Player 1"
+			inputData.player1 !== ""
+				? inputData.player1
+				: `${text["setup"]["player"][game.getCurrentLang()]} 1`
 		);
 		game.setName(
 			"player2",
-			inputData.player2 !== "" ? inputData.player2 : "Player 2"
+			inputData.player2 !== ""
+				? inputData.player2
+				: `${text["setup"]["player"][game.getCurrentLang()]} 2`
 		);
 		setupContainer.classList.remove("show");
 		document.getElementById("scorebar").classList.add("show");
@@ -172,7 +180,7 @@ function setupGame() {
 	// Warning if colors match
 	function updateWarning(display = false) {
 		setupForm.querySelector("[warning-text]").innerHTML = display
-			? "The colors shouldn't match!"
+			? text["setup"]["warning"][game.getCurrentLang()]
 			: "";
 	}
 	// Set player color
@@ -190,18 +198,30 @@ function setupGame() {
 	}
 }
 
-function stringSetup(lang = game.currentLang) {
-	// restartButton.innerHTML = text["gameEnd"]["restart"][lang];
-	// setupForm.querySelector('label[for="currentLang"]').innerHTML =
-	// 	text["setup"]["currentLang"][lang];
-	// setupForm.querySelector(
-	// 	'label[for="player1"]'
-	// ).innerHTML = `${text["setup"]["player"][lang]} 1`;
-	// setupForm.querySelector(
-	// 	'label[for="player2"]'
-	// ).innerHTML = `${text["setup"]["player"][lang]} 2`;
-	// setupForm.querySelector("#submitButton").innerHTML =
-	// 	text["setup"]["submitButton"][lang];
+function stringSetup() {
+	const lang = game.getCurrentLang();
+
+	// Setup form
+	setupForm.querySelector(
+		"#currentLangSelect"
+	).innerHTML = `${text["setup"]["currentLang"][lang]}`;
+	setupForm.querySelector(
+		"span#player1"
+	).innerHTML = `${text["setup"]["player"][lang]} 1`;
+	setupForm
+		.querySelector("input[name='player1']")
+		.setAttribute("placeholder", text["setup"]["name"][lang]);
+	setupForm.querySelector(
+		"span#player2"
+	).innerHTML = `${text["setup"]["player"][lang]} 2`;
+	setupForm
+		.querySelector("input[name='player2']")
+		.setAttribute("placeholder", text["setup"]["name"][lang]);
+	setupForm.querySelector("#startGameButton").innerHTML =
+		text["setup"]["startGameButton"][lang];
+
+	// Game end
+	restartButton.innerHTML = text["gameEnd"]["restartButton"][lang];
 }
 
 function startGame() {
@@ -240,13 +260,21 @@ function setHover() {
 function handleClick(e) {
 	const cell = e.currentTarget; // clicked cell
 	const currentClass = game.getCrossTurn() ? CROSS_CLASS : CIRCLE_CLASS;
+
 	drawCell(cell, currentClass);
 
 	if (checkWin(currentClass)) {
+		const currentEmoji = game.getCrossTurn() ? "❌" : "⭕";
+		gameEndText.innerHTML = `${currentEmoji} <em>${
+			game.player1Turn ? game.getName("player1") : game.getName("player2")
+		}</em> ${text["gameEnd"]["win"][game.getCurrentLang()]}!`;
 		endGame();
 		game[game.player1Turn ? "player1" : "player2"].wins++;
 	} else if (checkDraw()) {
-		endGame(true);
+		gameEndText.innerHTML = `${
+			text["gameEnd"]["draw"][game.getCurrentLang()]
+		}`;
+		endGame();
 	} else {
 		game.switchTurns();
 		setHover();
@@ -285,10 +313,9 @@ function checkDraw() {
 	});
 }
 
-function endGame(draw = false) {
+function endGame() {
 	gameEnd.classList.add("show");
 	boardContainer.classList.add("blur");
-	// gameEndText.innerHTML =  text["gameEnd"][draw ? "draw" : "win"][game.currentLang];
 }
 
 function restartGame() {
