@@ -40,7 +40,7 @@ class Game {
 	}
 	switchPlayers() {
 		this.crossTurn = true;
-		this.player1Turn = this.player1.wins + (this.player2.wins % 2) === 0;
+		this.player1Turn = !this.player1Turn;
 		removeStylesheet();
 	}
 	colorPlayers() {
@@ -54,6 +54,26 @@ class Game {
 				game.player1Turn ? game.player2.color : game.player1.color
 			}}", 0`
 		);
+	}
+	colorScore() {
+		const playerFirst = this.player1Turn ? "player1" : "player2";
+		const playerSecond = this.player1Turn ? "player2" : "player1";
+		scoreCross.innerHTML = `❌ <em>${this.getName(
+			playerFirst
+		)}:</em> ${this.getWins(playerFirst)} wins`;
+		scoreCircle.innerHTML = `⭕ <em>${this.getName(
+			playerSecond
+		)}:</em> ${this.getWins(playerSecond)} wins`;
+		removeClass(scoreCross, "color");
+		removeClass(scoreCircle, "color");
+		scoreCross.classList.add(`color-${this.getColor(playerFirst)}`);
+		scoreCircle.classList.add(`color-${this.getColor(playerSecond)}`);
+
+		function removeClass(node, prefix) {
+			const regex = new RegExp("\\b" + prefix + "[^ ]*[ ]?\\b", "g");
+			node.className = node.className.replace(regex, "");
+			return node;
+		}
 	}
 	getPlayerTurn() {
 		return this.player1Turn;
@@ -74,10 +94,7 @@ class Game {
 		return this.currentLang;
 	}
 }
-
 export const game = new Game();
-console.log(game);
-// import text from "./text";
 
 // CSS classes
 const CROSS_CLASS = "cross";
@@ -94,6 +111,8 @@ const player2Colors = document.querySelectorAll(
 );
 const startGameButton = document.getElementById("startGameButton");
 
+const scoreCross = document.getElementById("scoreCross");
+const scoreCircle = document.getElementById("scoreCircle");
 const cellElements = document.querySelectorAll("[data-cell]");
 const board = document.getElementById("board");
 const boardContainer = document.querySelector(".board-container");
@@ -101,8 +120,8 @@ const boardContainer = document.querySelector(".board-container");
 const gameEnd = document.getElementById("gameEnd");
 const gameEndText = document.querySelector("[data-game-end-text]");
 const restartButton = document.getElementById("restartButton");
-
 // Game strings
+// import text from "./text";
 
 // At load
 stringSetup();
@@ -112,6 +131,7 @@ setupGame();
 // Setup game form
 function setupGame() {
 	// Event listeners
+	// Player colors
 	player1Colors.forEach((color) => {
 		color.addEventListener("click", (e) => {
 			updateWarning();
@@ -124,6 +144,14 @@ function setupGame() {
 			setPlayerColor("player2", e);
 		});
 	});
+	// Default player colors
+	setupForm
+		.querySelector("svg[color='red'][player='player1']")
+		.dispatchEvent(new MouseEvent("click"));
+	setupForm
+		.querySelector("svg[color='blue'][player='player2']")
+		.dispatchEvent(new MouseEvent("click"));
+	// Start game button
 	startGameButton.addEventListener("click", (e) => {
 		e.preventDefault(); // prevent refresh
 		const inputData = Object.fromEntries(new FormData(setupForm));
@@ -136,30 +164,18 @@ function setupGame() {
 			inputData.player2 !== "" ? inputData.player2 : "Player 2"
 		);
 		setupContainer.classList.remove("show");
-		console.log(document.getElementById("scorebar"));
 		document.getElementById("scorebar").classList.add("show");
-		document
-			.getElementById("player1Score")
-			.classList.add(`color-${game.getColor("player1")}`);
-		document
-			.getElementById("player2Score")
-			.classList.add(`color-${game.getColor("player2")}`);
+
 		startGame();
 	});
-	// Defaults
-	setupForm
-		.querySelector("svg[color='red'][player='player1']")
-		.dispatchEvent(new MouseEvent("click"));
-	setupForm
-		.querySelector("svg[color='blue'][player='player2']")
-		.dispatchEvent(new MouseEvent("click"));
 
-	function updateWarning(warning = false) {
-		setupForm.querySelector("[warning-text]").innerHTML = warning
+	// Warning if colors match
+	function updateWarning(display = false) {
+		setupForm.querySelector("[warning-text]").innerHTML = display
 			? "The colors shouldn't match!"
 			: "";
 	}
-
+	// Set player color
 	function setPlayerColor(player, e) {
 		const opponent = player === "player1" ? "player2" : "player1";
 		const row = player === "player1" ? player1Colors : player2Colors;
@@ -188,15 +204,10 @@ function stringSetup(lang = game.currentLang) {
 	// 	text["setup"]["submitButton"][lang];
 }
 
-// SVG
-function passSvg(currentClass) {
-	return `<svg class="draw">
-	<use href="#${currentClass}"></use>
-	</svg>`;
-}
-
 function startGame() {
+	console.log(game); // test
 	game.colorPlayers();
+	game.colorScore();
 	cellElements.forEach((cell) => {
 		cell.classList.remove(CROSS_CLASS);
 		cell.classList.remove(CIRCLE_CLASS);
@@ -209,6 +220,7 @@ function startGame() {
 	boardContainer.classList.remove("blur");
 }
 
+// Inject stylesheet for SVG coloring
 function insertStylesheet(css) {
 	const svgStyle = document.createElement("style");
 	svgStyle.setAttribute("id", "svgStyle");
@@ -232,6 +244,7 @@ function handleClick(e) {
 
 	if (checkWin(currentClass)) {
 		endGame();
+		game[game.player1Turn ? "player1" : "player2"].wins++;
 	} else if (checkDraw()) {
 		endGame(true);
 	} else {
@@ -240,9 +253,17 @@ function handleClick(e) {
 	}
 }
 
+// Draw cell
 function drawCell(cell, currentClass) {
 	cell.classList.add(currentClass);
 	cell.insertAdjacentHTML("afterbegin", passSvg(currentClass));
+}
+
+// Draw SVG
+function passSvg(currentClass) {
+	return `<svg class="draw">
+	<use href="#${currentClass}"></use>
+	</svg>`;
 }
 
 function checkWin(currentClass) {
@@ -272,5 +293,6 @@ function endGame(draw = false) {
 
 function restartGame() {
 	game.switchPlayers();
+	removeStylesheet();
 	startGame();
 }
