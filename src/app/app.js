@@ -45,12 +45,12 @@ class Game {
 	}
 	colorPlayers() {
 		insertStylesheet(
-			`.board .cell.cross svg {fill:${
+			`.board .cell svg.cross {fill:${
 				game.player1Turn ? game.player1.color : game.player2.color
 			}}", 0`
 		);
 		insertStylesheet(
-			`.board .cell.circle svg {fill:${
+			`.board .cell svg.circle {fill:${
 				game.player1Turn ? game.player2.color : game.player1.color
 			}}", 0`
 		);
@@ -235,12 +235,12 @@ function startGame() {
 	game.colorPlayers();
 	game.colorScore();
 	cellElements.forEach((cell) => {
-		cell.classList.remove(CROSS_CLASS);
-		cell.classList.remove(CIRCLE_CLASS);
+		cell.setAttribute("mark", "");
 		cell.innerHTML = "";
 		cell.removeEventListener("click", handleClick);
 		cell.addEventListener("click", handleClick, { once: true });
-		cell.addEventListener("mouseenter", handleHover, { once: true });
+		cell.addEventListener("mouseenter", onHover);
+		cell.addEventListener("mouseleave", offHover);
 	});
 	gameEnd.classList.remove("show");
 	boardContainer.classList.remove("blur");
@@ -280,24 +280,30 @@ function handleClick(e) {
 	}
 }
 
-function handleHover(e) {
+function onHover(e) {
 	const cell = e.currentTarget;
 	const currentClass = game.getCrossTurn() ? CROSS_CLASS : CIRCLE_CLASS;
-	drawCell(cell, currentClass, true);
+	if (!cell.getAttribute("mark")) {
+		drawCell(cell, currentClass, true);
+	}
+}
+function offHover(e) {
+	const cell = e.currentTarget;
+	cell.querySelector("svg.hover").remove();
 }
 
 // Draw cell
 function drawCell(cell, currentClass, hover = false) {
-	cell.classList.add(currentClass);
-	if (hover) {
-		cell.classList.add(hover);
+	if (!hover) {
+		cell.setAttribute("mark", currentClass);
+		cell.querySelector("svg.hover").remove();
 	}
-	cell.insertAdjacentHTML("afterbegin", passSvg(currentClass));
+	cell.insertAdjacentHTML("afterbegin", passSvg(currentClass, hover));
 }
 
 // Draw SVG
-function passSvg(currentClass) {
-	return `<svg class="draw">
+function passSvg(currentClass, hover = false) {
+	return `<svg class="draw ${currentClass} ${hover ? "hover" : ""}">
 	<use href="#${currentClass}"></use>
 	</svg>`;
 }
@@ -306,7 +312,7 @@ function checkWin(currentClass) {
 	return WIN_COMBINATIONS.some((combination) => {
 		// at least 1 of the combinations
 		return combination.every((index) => {
-			return cellElements[index].classList.contains(currentClass);
+			return cellElements[index].getAttribute("mark") === currentClass;
 		});
 	});
 }
@@ -314,10 +320,7 @@ function checkWin(currentClass) {
 function checkDraw() {
 	return [...cellElements].every((cell) => {
 		// NodeList to Array
-		return (
-			cell.classList.contains(CROSS_CLASS) ||
-			cell.classList.contains(CIRCLE_CLASS)
-		);
+		return cell.getAttribute("mark") !== "";
 	});
 }
 

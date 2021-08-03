@@ -117,6 +117,9 @@ small {
 				// Drawn cells
 				svg.draw {
 					height: 75%;
+					&.hover {
+						opacity: 0.6;
+					}
 				}
 			}
 		}
