@@ -47,7 +47,7 @@ const text = {
 	},
 	gameEnd: {
 		win: {
-			en: `wins!`,
+			en: `wins`,
 			de: `gewinnt`,
 			sl: `je zmagal`,
 			hr: `je pobijedio`,

@@ -16,7 +16,7 @@ class Game {
 	constructor() {
 		this.crossTurn = true;
 		this.player1Turn = true;
-		this.currentLang = "sl";
+		this.currentLang = "en";
 		this.player1 = {
 			name: "Player 1",
 			color: "red",
@@ -134,7 +134,13 @@ setupGame();
 
 // Setup game form
 function setupGame() {
-	// Event listeners
+	// Language picker
+	currentLang.querySelectorAll("a.dropdown-item").forEach((item) => {
+		item.addEventListener("click", (e) => {
+			game.currentLang = e.target.getAttribute("value");
+			stringSetup();
+		});
+	});
 	// Player colors
 	player1Colors.forEach((color) => {
 		color.addEventListener("click", (e) => {
@@ -234,8 +240,8 @@ function startGame() {
 		cell.innerHTML = "";
 		cell.removeEventListener("click", handleClick);
 		cell.addEventListener("click", handleClick, { once: true });
+		cell.addEventListener("mouseenter", handleHover, { once: true });
 	});
-	setHover();
 	gameEnd.classList.remove("show");
 	boardContainer.classList.remove("blur");
 }
@@ -249,12 +255,6 @@ function insertStylesheet(css) {
 }
 function removeStylesheet() {
 	document.head.removeChild(document.getElementById("svgStyle"));
-}
-
-function setHover() {
-	// board.classList.remove(CROSS_CLASS);
-	// board.classList.remove(CIRCLE_CLASS);
-	// board.classList.add(game.crossTurn ? CROSS_CLASS : CIRCLE_CLASS);
 }
 
 function handleClick(e) {
@@ -277,13 +277,21 @@ function handleClick(e) {
 		endGame();
 	} else {
 		game.switchTurns();
-		setHover();
 	}
 }
 
+function handleHover(e) {
+	const cell = e.currentTarget;
+	const currentClass = game.getCrossTurn() ? CROSS_CLASS : CIRCLE_CLASS;
+	drawCell(cell, currentClass, true);
+}
+
 // Draw cell
-function drawCell(cell, currentClass) {
+function drawCell(cell, currentClass, hover = false) {
 	cell.classList.add(currentClass);
+	if (hover) {
+		cell.classList.add(hover);
+	}
 	cell.insertAdjacentHTML("afterbegin", passSvg(currentClass));
 }
 
