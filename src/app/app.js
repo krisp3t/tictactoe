@@ -137,7 +137,8 @@ function setupGame() {
 	// Language picker
 	currentLang.querySelectorAll("a.dropdown-item").forEach((item) => {
 		item.addEventListener("click", (e) => {
-			game.currentLang = e.target.getAttribute("value");
+			game.currentLang = e.currentTarget.getAttribute("value");
+			console.log(e.currentTarget);
 			stringSetup();
 		});
 	});
