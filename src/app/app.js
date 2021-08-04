@@ -98,7 +98,7 @@ class Game {
 		return this.currentLang;
 	}
 }
-export const game = new Game();
+const game = new Game();
 
 // CSS classes
 const CROSS_CLASS = "cross";
@@ -118,18 +118,17 @@ const startGameButton = document.getElementById("startGameButton");
 const scoreCross = document.getElementById("scoreCross");
 const scoreCircle = document.getElementById("scoreCircle");
 const cellElements = document.querySelectorAll("[data-cell]");
-const board = document.getElementById("board");
 const boardContainer = document.querySelector(".board-container");
 
 const gameEnd = document.getElementById("gameEnd");
-const gameEndText = document.querySelector("[data-game-end-text]");
+const gameEndText = document.querySelector("[game-end-text]");
 const restartButton = document.getElementById("restartButton");
 // Game strings
-const text = require("./text");
+const text = require("./text"); // eslint-disable-line
 
 // At load
 stringSetup();
-restartButton.addEventListener("click", restartGame); // end game restart button
+restartButton.addEventListener("click", restartGame);
 setupGame();
 
 // Setup game form
@@ -232,7 +231,6 @@ function stringSetup() {
 }
 
 function startGame() {
-	console.log(game); // test
 	game.colorPlayers();
 	game.colorScore();
 	cellElements.forEach((cell) => {

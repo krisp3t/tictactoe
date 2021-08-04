@@ -1,7 +1,12 @@
 // Variables
-// $cell-size: calc(max(80px, 13vh));
 $cell-size: calc(max(80px, 13vh));
 $player-colors: (red, orange, gold, lime, green, blue, cyan, pink, purple);
+$background-color: #fff;
+$foreground-color: #000;
+@media (prefers-color-scheme: dark) {
+	body {
+	}
+}
 
 // Mixins
 @mixin center($display: null) {
@@ -33,6 +38,9 @@ $player-colors: (red, orange, gold, lime, green, blue, cyan, pink, purple);
 }
 
 // Global
+body {
+	background-color: $background-color;
+}
 img.emoji {
 	height: 1em;
 	width: 1em;
@@ -88,12 +96,12 @@ small {
 		.board {
 			@include center(grid);
 			grid-template-columns: repeat(3, auto);
-			background-color: #fff;
+			background-color: $background-color;
 
 			.cell {
 				width: $cell-size;
 				height: $cell-size;
-				border: 1px solid #000;
+				border: 1px solid $foreground-color;
 				cursor: pointer;
 				display: flex;
 				@include center;
@@ -112,6 +120,11 @@ small {
 				}
 				&:nth-child(3n + 3) {
 					border-right: none;
+				}
+
+				&[mark="cross"],
+				&[mark="circle"] {
+					cursor: not-allowed;
 				}
 
 				// Drawn cells
@@ -150,7 +163,7 @@ small {
 		flex-direction: column;
 
 		.card {
-			background-color: #fff;
+			background-color: $background-color;
 			display: flex;
 			flex-direction: column;
 			box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);

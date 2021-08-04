@@ -15,7 +15,9 @@ module.exports = merge(common, {
 	},
 	plugins: [
 		new CleanWebpackPlugin(),
-		new ESLintPlugin(),
+		new ESLintPlugin({
+			failOnError: false,
+		}),
 		new MiniCssExtractPlugin({ filename: "[name].[contenthash].css" }),
 	],
 	module: {
@@ -24,7 +26,10 @@ module.exports = merge(common, {
 				test: /\.scss$/,
 				use: [
 					{ loader: "style-loader" },
-					{ loader: MiniCssExtractPlugin.loader },
+					{
+						loader: MiniCssExtractPlugin.loader,
+						options: { esModule: false },
+					},
 					{ loader: "css-loader" },
 					{
 						loader: "postcss-loader",
@@ -43,7 +48,10 @@ module.exports = merge(common, {
 				test: /\.css$/,
 				use: [
 					{ loader: "style-loader" },
-					{ loader: MiniCssExtractPlugin.loader },
+					{
+						loader: MiniCssExtractPlugin.loader,
+						options: { esModule: false },
+					},
 					{ loader: "css-loader" },
 					{
 						loader: "postcss-loader",
