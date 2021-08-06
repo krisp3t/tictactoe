@@ -196,7 +196,9 @@ function setupGame() {
 		if (game.getColor(opponent) !== e.currentTarget.getAttribute("color")) {
 			updateWarning();
 			game.setColor(player, e.currentTarget.getAttribute("color"));
-			row.forEach((color) => color.classList.remove("selected"));
+			row.forEach((color) => {
+				color.classList.remove("selected");
+			});
 			e.currentTarget.classList.add("selected");
 		} else {
 			updateWarning(true);

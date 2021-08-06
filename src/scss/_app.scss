@@ -81,11 +81,9 @@ svg.color {
 			fill: $color;
 		}
 	}
-	&:hover {
-		opacity: 0.6;
-	}
+	opacity: 0.3;
 	&.selected {
-		border: 2px solid #111111;
+		opacity: 1;
 	}
 }
 small {
@@ -203,9 +201,6 @@ small {
 			}
 			&.dark {
 				@include dark;
-				svg.color.selected {
-					border: 2px solid #ced4da;
-				}
 			}
 		}
 	}
