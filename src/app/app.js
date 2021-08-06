@@ -314,7 +314,9 @@ function onHover(e) {
 }
 function offHover(e) {
 	const cell = e.currentTarget;
-	cell.querySelector("svg.hover").remove();
+	if (cell.querySelector("svg.hover")) {
+		cell.querySelector("svg.hover").remove();
+	}
 }
 
 // Draw cell
