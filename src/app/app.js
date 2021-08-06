@@ -58,14 +58,12 @@ class Game {
 	colorScore() {
 		const playerFirst = this.player1Turn ? "player1" : "player2";
 		const playerSecond = this.player1Turn ? "player2" : "player1";
-		scoreCross.innerHTML = `❌ <em>${this.getName(
-			playerFirst
-		)}:</em> ${this.getWins(playerFirst)} ${
-			text["game"]["wins"][this.currentLang]
-		}`;
+		scoreCross.innerHTML = `❌ <em>${this.getName(playerFirst)}:</em><br>
+		${this.getWins(playerFirst)} 
+		${text["game"]["wins"][this.currentLang]}`;
 		scoreCircle.innerHTML = `⭕ <em>${this.getName(
 			playerSecond
-		)}:</em> ${this.getWins(playerSecond)} ${
+		)}:</em><br> ${this.getWins(playerSecond)} ${
 			text["game"]["wins"][this.currentLang]
 		}`;
 		removeClass(scoreCross, "color");
@@ -145,8 +143,6 @@ function checkTheme() {
 
 // Change theme
 function setTheme(force = undefined) {
-	console.log(darkModeToggle.checked);
-	console.log(` force ${force}`);
 	let className = "dark";
 	document.body.classList.toggle(className, force);
 	document.getElementById("setupCard").classList.toggle(className, force);
@@ -160,7 +156,6 @@ function setupGame() {
 	currentLang.querySelectorAll("a.dropdown-item").forEach((item) => {
 		item.addEventListener("click", (e) => {
 			game.currentLang = e.currentTarget.getAttribute("value");
-			console.log(e.currentTarget);
 			stringSetup();
 		});
 	});
@@ -273,6 +268,7 @@ function startGame() {
 	});
 	gameEnd.classList.remove("show");
 	boardContainer.classList.remove("blur");
+	boardContainer.classList.remove("hide");
 }
 
 // Inject stylesheet for SVG coloring

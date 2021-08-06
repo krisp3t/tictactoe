@@ -1,0 +1,47 @@
+// sm breakpoint
+@media only screen and (max-width: 576px) {
+	.btn,
+	.form-control {
+		font-size: 0.9rem !important;
+	}
+
+	.setup.show,
+	.game-end.show {
+		.container {
+			width: 80%;
+
+			.card {
+				.setup-row {
+					align-items: center;
+
+					.form-check {
+						flex-direction: column;
+						align-items: center;
+						padding-left: 0;
+
+						.form-check-input {
+							margin-left: 0;
+							margin-top: -0.6rem;
+						}
+						.form-check-label {
+							margin-left: 0;
+							margin-top: 0.2rem;
+							font-size: 0.7rem;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.scorebar {
+		.btn {
+			padding: 1.5vw 2vh;
+			margin: 0 10px;
+		}
+	}
+
+	.box-container {
+		height: 80vh;
+	}
+}

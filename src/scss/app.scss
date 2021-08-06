@@ -81,6 +81,9 @@ small {
 	&.show {
 		display: flex;
 	}
+	.btn {
+		margin: 0 20px;
+	}
 	@each $btn-color in $player-colors {
 		.btn.color-#{$btn-color} {
 			background-color: $btn-color;
@@ -91,7 +94,7 @@ small {
 // Main container
 .box-container {
 	width: 100vw;
-	height: 90vh;
+	height: 80vh;
 	@include center(flex);
 	flex-direction: column;
 
@@ -99,6 +102,9 @@ small {
 		box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
 		&.blur {
 			filter: blur(1px);
+		}
+		&.hide {
+			display: none;
 		}
 
 		.board {
