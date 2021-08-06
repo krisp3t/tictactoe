@@ -48,9 +48,7 @@ $foreground-color: #000;
 
 // Global
 body {
-	&.light {
-		@include light;
-	}
+	@include light;
 	&.dark {
 		@include dark;
 		.input-group {
@@ -72,20 +70,7 @@ img.emoji {
 	margin: 0 0.05em 0 0.1em;
 	vertical-align: -0.1em;
 }
-svg.color {
-	height: 30px;
-	width: 30px;
-	fill: red;
-	@each $color in $player-colors {
-		&.color-#{$color} {
-			fill: $color;
-		}
-	}
-	opacity: 0.3;
-	&.selected {
-		opacity: 1;
-	}
-}
+
 small {
 	font-size: 0.85rem;
 }
@@ -119,9 +104,7 @@ small {
 		.board {
 			@include center(grid);
 			grid-template-columns: repeat(3, auto);
-			&.light {
-				@include light;
-			}
+			@include light;
 			&.dark {
 				background-color: #666;
 			}
@@ -129,7 +112,7 @@ small {
 			.cell {
 				width: $cell-size;
 				height: $cell-size;
-				border: 1px solid $foreground-color;
+				border: 1px solid #000;
 				cursor: pointer;
 				display: flex;
 				@include center;
@@ -184,23 +167,6 @@ small {
 	background-color: rgba(0, 0, 0, 0.5);
 	font-size: 1.25rem;
 
-	.setup-row {
-		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-
-		.form-check {
-			display: flex;
-			.form-check-input {
-				margin-top: 0;
-			}
-			.form-check-label {
-				margin-left: 0.5rem;
-				font-size: 0.8rem;
-			}
-		}
-	}
-
 	.container {
 		width: 50%;
 		margin: auto;
@@ -213,11 +179,59 @@ small {
 			box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
 			border: 1px solid rgba(0, 0, 0, 0.5);
 
-			&.light {
-				@include light;
+			.setup-row {
+				display: flex;
+				justify-content: space-between;
+				align-items: baseline;
+
+				.dropdown-menu {
+					background-color: #666;
+					a {
+						color: #fff;
+						&:hover {
+							color: #000;
+						}
+					}
+				}
+
+				.form-check {
+					display: flex;
+					.form-check-input {
+						margin-top: 0;
+					}
+					.form-check-label {
+						margin-left: 0.5rem;
+						font-size: 0.8rem;
+					}
+				}
 			}
-			&.dark {
-				@include dark;
+
+			svg.color {
+				height: 30px;
+				width: 30px;
+				fill: red;
+				@each $color in $player-colors {
+					&.color-#{$color} {
+						fill: $color;
+					}
+				}
+				stroke: #666;
+				stroke-width: 5;
+				opacity: 0.3;
+				&.selected {
+					opacity: 1;
+				}
+			}
+
+			&#setupCard,
+			&#gameEndCard {
+				@include light;
+				&.dark {
+					@include dark;
+					svg.color {
+						stroke: #fff;
+					}
+				}
 			}
 		}
 	}

@@ -107,6 +107,7 @@ const CIRCLE_CLASS = "circle";
 const setupContainer = document.getElementById("setup");
 const setupForm = document.getElementById("setupForm");
 const currentLang = document.getElementById("currentLang");
+const darkModeToggle = document.querySelector(".dark-mode-toggle input");
 const player1Colors = document.querySelectorAll(
 	".color-row svg[player='player1']"
 );
@@ -127,9 +128,31 @@ const restartButton = document.getElementById("restartButton");
 const text = require("./text"); // eslint-disable-line
 
 // At load
+checkTheme();
 stringSetup();
-restartButton.addEventListener("click", restartGame);
 setupGame();
+
+// Media query light / dark mode
+function checkTheme() {
+	darkModeToggle.addEventListener("change", () => {
+		setTheme();
+	});
+	darkModeToggle.checked = window.matchMedia(
+		"(prefers-color-scheme: dark)"
+	).matches;
+	setTheme(darkModeToggle.checked);
+}
+
+// Change theme
+function setTheme(force = undefined) {
+	console.log(darkModeToggle.checked);
+	console.log(` force ${force}`);
+	let className = "dark";
+	document.body.classList.toggle(className, force);
+	document.getElementById("setupCard").classList.toggle(className, force);
+	boardContainer.querySelector(".board").classList.toggle(className, force);
+	document.getElementById("gameEndCard").classList.toggle(className, force);
+}
 
 // Setup game form
 function setupGame() {
@@ -161,6 +184,8 @@ function setupGame() {
 	setupForm
 		.querySelector("svg[color='blue'][player='player2']")
 		.dispatchEvent(new MouseEvent("click"));
+	// Restart button
+	restartButton.addEventListener("click", restartGame);
 	// Start game button
 	startGameButton.addEventListener("click", (e) => {
 		e.preventDefault(); // prevent refresh

@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Tic-Tac-Toe</title>
 	</head>
-	<body class="dark">
+	<body class="">
 		<div
 			class="scorebar my-3 mx-4 justify-content-between show"
 			id="scorebar"
@@ -16,7 +16,7 @@
 		</div>
 		<div class="box-container">
 			<div class="board-container blur">
-				<div class="board cross dark" id="board">
+				<div class="board cross" id="board">
 					<div class="cell" data-cell></div>
 					<div class="cell" data-cell></div>
 					<div class="cell" data-cell></div>
@@ -31,7 +31,7 @@
 		</div>
 		<div class="setup show" id="setup">
 			<div class="container">
-				<div class="card p-4 dark">
+				<div class="card p-4" id="setupCard">
 					<form id="setupForm">
 						<div class="setup-row">
 							<div class="dropdown" id="currentLang">
@@ -281,7 +281,7 @@
 		</div>
 		<div class="game-end" id="gameEnd">
 			<div class="container">
-				<div class="card p-4 text-center dark">
+				<div class="card p-4 text-center" id="gameEndCard">
 					<p game-end-text></p>
 					<div>
 						<button
