@@ -3,7 +3,6 @@ const common = require("./webpack.common");
 const { merge } = require("webpack-merge");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const ESLintPlugin = require("eslint-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -15,9 +14,6 @@ module.exports = merge(common, {
 	},
 	plugins: [
 		new CleanWebpackPlugin(),
-		new ESLintPlugin({
-			failOnError: false,
-		}),
 		new MiniCssExtractPlugin({ filename: "[name].[contenthash].css" }),
 	],
 	module: {
