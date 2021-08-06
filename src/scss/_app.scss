@@ -1,12 +1,12 @@
 // Variables
 $cell-size: calc(max(80px, 13vh));
 $player-colors: (red, orange, gold, lime, green, blue, cyan, pink, purple);
-$background-color: #fff;
+$bg-light: #fff;
+$fg-light: #000;
+$bg-dark: #333;
+$fg-dark: #fff;
+$background-color: #333;
 $foreground-color: #000;
-@media (prefers-color-scheme: dark) {
-	body {
-	}
-}
 
 // Mixins
 @mixin center($display: null) {
@@ -18,6 +18,15 @@ $foreground-color: #000;
 		display: $display;
 	}
 }
+@mixin light {
+	background-color: $bg-light;
+	color: $fg-light;
+}
+@mixin dark {
+	background-color: $bg-dark;
+	color: $fg-dark;
+}
+
 // Functions
 // https://codepen.io/davidhalford/pen/wlDxL
 @function color-contrast($color) {
@@ -39,8 +48,24 @@ $foreground-color: #000;
 
 // Global
 body {
-	background-color: $background-color;
+	&.light {
+		@include light;
+	}
+	&.dark {
+		@include dark;
+		.input-group {
+			.input-group-text {
+				background-color: #666;
+				color: #fff;
+			}
+			.form-control {
+				background-color: #333;
+				color: #fff;
+			}
+		}
+	}
 }
+
 img.emoji {
 	height: 1em;
 	width: 1em;
@@ -96,7 +121,12 @@ small {
 		.board {
 			@include center(grid);
 			grid-template-columns: repeat(3, auto);
-			background-color: $background-color;
+			&.light {
+				@include light;
+			}
+			&.dark {
+				background-color: #666;
+			}
 
 			.cell {
 				width: $cell-size;
@@ -163,11 +193,20 @@ small {
 		flex-direction: column;
 
 		.card {
-			background-color: $background-color;
 			display: flex;
 			flex-direction: column;
 			box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
 			border: 1px solid rgba(0, 0, 0, 0.5);
+
+			&.light {
+				@include light;
+			}
+			&.dark {
+				@include dark;
+				svg.color.selected {
+					border: 2px solid #ced4da;
+				}
+			}
 		}
 	}
 }
