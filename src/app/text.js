@@ -7,6 +7,13 @@ const text = {
 			hr: "Jezik",
 			sr: "Језик",
 		},
+		darkMode: {
+			en: "Dark Mode",
+			de: "Dunkelmodus",
+			sl: "Temni način",
+			hr: "Tamni način",
+			sr: "Тамни режим",
+		},
 		player: {
 			en: "Player",
 			de: "Spieler",

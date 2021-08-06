@@ -214,6 +214,9 @@ function stringSetup() {
 		"#currentLangSelect"
 	).innerHTML = `${text["setup"]["currentLang"][lang]}`;
 	setupForm.querySelector(
+		".dark-mode-toggle label"
+	).innerHTML = `${text["setup"]["darkMode"][lang]}`;
+	setupForm.querySelector(
 		"span#player1"
 	).innerHTML = `${text["setup"]["player"][lang]} 1`;
 	setupForm
