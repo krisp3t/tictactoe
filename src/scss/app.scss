@@ -48,7 +48,9 @@ $foreground-color: #000;
 
 // Global
 body {
-	@include light;
+	height: 100vh;
+	background-color: rgb(241, 241, 241);
+	color: #000;
 	&.dark {
 		@include dark;
 		.input-group {
@@ -61,6 +63,9 @@ body {
 				color: #fff;
 			}
 		}
+	}
+	.container-fluid {
+		height: 100vh;
 	}
 }
 
@@ -77,13 +82,20 @@ small {
 
 // Scorebar
 .scorebar {
-	display: none;
+	visibility: hidden;
 	&.show {
+		visibility: visible;
 		display: flex;
+		max-height: 20vh;
 	}
 	.btn {
 		margin: 0 20px;
 		font-size: 1.25rem;
+		box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+		span.player-text {
+			text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
+			font-style: italic;
+		}
 	}
 	@each $btn-color in $player-colors {
 		.btn.color-#{$btn-color} {

@@ -7,287 +7,289 @@
 		<title>Tic-Tac-Toe</title>
 	</head>
 	<body class="">
-		<div
-			class="scorebar my-3 mx-4 justify-content-between show"
-			id="scorebar"
-		>
-			<div class="btn" id="scoreCross">‏‏‎ ‎‎‎‎‎‎</div>
-			<div class="btn" id="scoreCircle">‏‏‎ ‎</div>
-		</div>
-		<div class="box-container">
-			<div class="board-container blur hide">
-				<div class="board cross" id="board">
-					<div class="cell" data-cell></div>
-					<div class="cell" data-cell></div>
-					<div class="cell" data-cell></div>
-					<div class="cell" data-cell></div>
-					<div class="cell" data-cell></div>
-					<div class="cell" data-cell></div>
-					<div class="cell" data-cell></div>
-					<div class="cell" data-cell></div>
-					<div class="cell" data-cell></div>
+		<div class="container-fluid pt-3 px-0">
+			<div class="scorebar mx-4 justify-content-between" id="scorebar">
+				<div class="btn" id="scoreCross">‏‏‎ ‎‎‎‎‎‎</div>
+				<div class="btn" id="scoreCircle">‏‏‎ ‎</div>
+			</div>
+			<div class="box-container">
+				<div class="board-container blur hide">
+					<div class="board cross" id="board">
+						<div class="cell" data-cell></div>
+						<div class="cell" data-cell></div>
+						<div class="cell" data-cell></div>
+						<div class="cell" data-cell></div>
+						<div class="cell" data-cell></div>
+						<div class="cell" data-cell></div>
+						<div class="cell" data-cell></div>
+						<div class="cell" data-cell></div>
+						<div class="cell" data-cell></div>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="setup show" id="setup">
-			<div class="container">
-				<div class="card p-4" id="setupCard">
-					<form id="setupForm">
-						<div class="setup-row">
-							<div class="dropdown" id="currentLang">
-								<button
+			<div class="setup show" id="setup">
+				<div class="container">
+					<div class="card p-4" id="setupCard">
+						<form id="setupForm">
+							<div class="setup-row">
+								<div class="dropdown" id="currentLang">
+									<button
+										class="
+											btn btn-secondary
+											dropdown-toggle
+											mb-3
+										"
+										type="button"
+										id="currentLangSelect"
+										data-bs-toggle="dropdown"
+										aria-expanded="false"
+									>
+										Language
+									</button>
+									<ul
+										class="dropdown-menu"
+										aria-labelledby="currentLangSelect"
+									>
+										<li>
+											<a
+												class="dropdown-item"
+												href="#"
+												value="en"
+												>🇬🇧 English</a
+											>
+										</li>
+										<li>
+											<a
+												class="dropdown-item"
+												href="#"
+												value="de"
+												>🇩🇪 Deutsch</a
+											>
+										</li>
+										<li>
+											<a
+												class="dropdown-item"
+												href="#"
+												value="sl"
+												>🇸🇮 Slovenščina</a
+											>
+										</li>
+										<li>
+											<a
+												class="dropdown-item"
+												href="#"
+												value="hr"
+												>🇭🇷 Hrvatski</a
+											>
+										</li>
+										<li>
+											<a
+												class="dropdown-item"
+												href="#"
+												value="sr"
+												>🇷🇸 Српски</a
+											>
+										</li>
+									</ul>
+								</div>
+								<div
 									class="
-										btn btn-secondary
-										dropdown-toggle
-										mb-3
+										form-check form-switch
+										dark-mode-toggle
 									"
-									type="button"
-									id="currentLangSelect"
-									data-bs-toggle="dropdown"
-									aria-expanded="false"
 								>
-									Language
-								</button>
-								<ul
-									class="dropdown-menu"
-									aria-labelledby="currentLangSelect"
-								>
-									<li>
-										<a
-											class="dropdown-item"
-											href="#"
-											value="en"
-											>🇬🇧 English</a
-										>
-									</li>
-									<li>
-										<a
-											class="dropdown-item"
-											href="#"
-											value="de"
-											>🇩🇪 Deutsch</a
-										>
-									</li>
-									<li>
-										<a
-											class="dropdown-item"
-											href="#"
-											value="sl"
-											>🇸🇮 Slovenščina</a
-										>
-									</li>
-									<li>
-										<a
-											class="dropdown-item"
-											href="#"
-											value="hr"
-											>🇭🇷 Hrvatski</a
-										>
-									</li>
-									<li>
-										<a
-											class="dropdown-item"
-											href="#"
-											value="sr"
-											>🇷🇸 Српски</a
-										>
-									</li>
-								</ul>
+									<input
+										class="form-check-input"
+										type="checkbox"
+										id="flexSwitchCheckDefault"
+									/>
+									<label
+										class="form-check-label"
+										for="flexSwitchCheckDefault"
+										>Dark theme</label
+									>
+								</div>
 							</div>
-							<div
-								class="form-check form-switch dark-mode-toggle"
-							>
-								<input
-									class="form-check-input"
-									type="checkbox"
-									id="flexSwitchCheckDefault"
-								/>
-								<label
-									class="form-check-label"
-									for="flexSwitchCheckDefault"
-									>Dark theme</label
-								>
-							</div>
-						</div>
 
-						<div class="input-group mb-1">
-							<span class="input-group-text" id="player1"
-								>Player 1</span
-							>
-							<input
-								type="text"
-								class="form-control"
-								placeholder="Name"
-								aria-label="Player 1 name"
-								aria-describedby="player1"
-								name="player1"
-								maxlength="24"
-							/>
-						</div>
-						<div class="color-row mb-3">
-							<svg
-								class="color color-red"
-								color="red"
-								player="player1"
-							>
-								<use href="#rectangle"></use>
-							</svg>
-							<svg
-								class="color color-orange"
-								color="orange"
-								player="player1"
-							>
-								<use href="#rectangle"></use>
-							</svg>
-							<svg
-								class="color color-gold"
-								color="gold"
-								player="player1"
-							>
-								<use href="#rectangle"></use>
-							</svg>
-							<svg
-								class="color color-lime"
-								color="lime"
-								player="player1"
-							>
-								<use href="#rectangle"></use>
-							</svg>
-							<svg
-								class="color color-green"
-								color="green"
-								player="player1"
-							>
-								<use href="#rectangle"></use>
-							</svg>
-							<svg
-								class="color color-blue"
-								color="blue"
-								player="player1"
-							>
-								<use href="#rectangle"></use>
-							</svg>
-							<svg
-								class="color color-cyan"
-								color="cyan"
-								player="player1"
-							>
-								<use href="#rectangle"></use>
-							</svg>
-							<svg
-								class="color color-pink"
-								color="pink"
-								player="player1"
-							>
-								<use href="#rectangle"></use>
-							</svg>
-							<svg
-								class="color color-purple"
-								color="purple"
-								player="player1"
-							>
-								<use href="#rectangle"></use>
-							</svg>
-						</div>
-						<div class="input-group mb-1">
-							<span class="input-group-text" id="player2"
-								>Player 2</span
-							>
-							<input
-								type="text"
-								class="form-control"
-								placeholder="Name"
-								aria-label="Player 2 name"
-								aria-describedby="player2"
-								name="player2"
-								maxlength="24"
-							/>
-						</div>
-						<div class="color-row mb-1">
-							<svg
-								class="color color-red"
-								color="red"
-								player="player2"
-							>
-								<use href="#rectangle"></use>
-							</svg>
-							<svg
-								class="color color-orange"
-								color="orange"
-								player="player2"
-							>
-								<use href="#rectangle"></use>
-							</svg>
-							<svg
-								class="color color-gold"
-								color="gold"
-								player="player2"
-							>
-								<use href="#rectangle"></use>
-							</svg>
-							<svg
-								class="color color-lime"
-								color="lime"
-								player="player2"
-							>
-								<use href="#rectangle"></use>
-							</svg>
-							<svg
-								class="color color-green"
-								color="green"
-								player="player2"
-							>
-								<use href="#rectangle"></use>
-							</svg>
-							<svg
-								class="color color-blue"
-								color="blue"
-								player="player2"
-							>
-								<use href="#rectangle"></use>
-							</svg>
-							<svg
-								class="color color-cyan"
-								color="cyan"
-								player="player2"
-							>
-								<use href="#rectangle"></use>
-							</svg>
-							<svg
-								class="color color-pink"
-								color="pink"
-								player="player2"
-							>
-								<use href="#rectangle"></use>
-							</svg>
-							<svg
-								class="color color-purple"
-								color="purple"
-								player="player2"
-							>
-								<use href="#rectangle"></use>
-							</svg>
-						</div>
-						<small class="text-danger" warning-text></small>
-						<div class="text-center mt-3">
+							<div class="input-group mb-1">
+								<span class="input-group-text" id="player1"
+									>Player 1</span
+								>
+								<input
+									type="text"
+									class="form-control"
+									placeholder="Name"
+									aria-label="Player 1 name"
+									aria-describedby="player1"
+									name="player1"
+									maxlength="24"
+								/>
+							</div>
+							<div class="color-row mb-3">
+								<svg
+									class="color color-red"
+									color="red"
+									player="player1"
+								>
+									<use href="#rectangle"></use>
+								</svg>
+								<svg
+									class="color color-orange"
+									color="orange"
+									player="player1"
+								>
+									<use href="#rectangle"></use>
+								</svg>
+								<svg
+									class="color color-gold"
+									color="gold"
+									player="player1"
+								>
+									<use href="#rectangle"></use>
+								</svg>
+								<svg
+									class="color color-lime"
+									color="lime"
+									player="player1"
+								>
+									<use href="#rectangle"></use>
+								</svg>
+								<svg
+									class="color color-green"
+									color="green"
+									player="player1"
+								>
+									<use href="#rectangle"></use>
+								</svg>
+								<svg
+									class="color color-blue"
+									color="blue"
+									player="player1"
+								>
+									<use href="#rectangle"></use>
+								</svg>
+								<svg
+									class="color color-cyan"
+									color="cyan"
+									player="player1"
+								>
+									<use href="#rectangle"></use>
+								</svg>
+								<svg
+									class="color color-pink"
+									color="pink"
+									player="player1"
+								>
+									<use href="#rectangle"></use>
+								</svg>
+								<svg
+									class="color color-purple"
+									color="purple"
+									player="player1"
+								>
+									<use href="#rectangle"></use>
+								</svg>
+							</div>
+							<div class="input-group mb-1">
+								<span class="input-group-text" id="player2"
+									>Player 2</span
+								>
+								<input
+									type="text"
+									class="form-control"
+									placeholder="Name"
+									aria-label="Player 2 name"
+									aria-describedby="player2"
+									name="player2"
+									maxlength="24"
+								/>
+							</div>
+							<div class="color-row mb-1">
+								<svg
+									class="color color-red"
+									color="red"
+									player="player2"
+								>
+									<use href="#rectangle"></use>
+								</svg>
+								<svg
+									class="color color-orange"
+									color="orange"
+									player="player2"
+								>
+									<use href="#rectangle"></use>
+								</svg>
+								<svg
+									class="color color-gold"
+									color="gold"
+									player="player2"
+								>
+									<use href="#rectangle"></use>
+								</svg>
+								<svg
+									class="color color-lime"
+									color="lime"
+									player="player2"
+								>
+									<use href="#rectangle"></use>
+								</svg>
+								<svg
+									class="color color-green"
+									color="green"
+									player="player2"
+								>
+									<use href="#rectangle"></use>
+								</svg>
+								<svg
+									class="color color-blue"
+									color="blue"
+									player="player2"
+								>
+									<use href="#rectangle"></use>
+								</svg>
+								<svg
+									class="color color-cyan"
+									color="cyan"
+									player="player2"
+								>
+									<use href="#rectangle"></use>
+								</svg>
+								<svg
+									class="color color-pink"
+									color="pink"
+									player="player2"
+								>
+									<use href="#rectangle"></use>
+								</svg>
+								<svg
+									class="color color-purple"
+									color="purple"
+									player="player2"
+								>
+									<use href="#rectangle"></use>
+								</svg>
+							</div>
+							<small class="text-danger" warning-text></small>
+							<div class="text-center mt-3">
+								<button
+									id="startGameButton"
+									class="btn btn-secondary"
+								></button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="game-end" id="gameEnd">
+				<div class="container">
+					<div class="card p-4 text-center" id="gameEndCard">
+						<p game-end-text></p>
+						<div>
 							<button
-								id="startGameButton"
+								id="restartButton"
 								class="btn btn-secondary"
 							></button>
 						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-		<div class="game-end" id="gameEnd">
-			<div class="container">
-				<div class="card p-4 text-center" id="gameEndCard">
-					<p game-end-text></p>
-					<div>
-						<button
-							id="restartButton"
-							class="btn btn-secondary"
-						></button>
 					</div>
 				</div>
 			</div>

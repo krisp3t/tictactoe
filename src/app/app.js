@@ -58,12 +58,14 @@ class Game {
 	colorScore() {
 		const playerFirst = this.player1Turn ? "player1" : "player2";
 		const playerSecond = this.player1Turn ? "player2" : "player1";
-		scoreCross.innerHTML = `❌ <em>${this.getName(playerFirst)}:</em><br>
+		scoreCross.innerHTML = `<span class="player-text">❌ ${this.getName(
+			playerFirst
+		)}:</span><br>
 		${this.getWins(playerFirst)} 
 		${text["game"]["wins"][this.currentLang]}`;
-		scoreCircle.innerHTML = `⭕ <em>${this.getName(
+		scoreCircle.innerHTML = `<span class="player-text">⭕ ${this.getName(
 			playerSecond
-		)}:</em><br> ${this.getWins(playerSecond)} ${
+		)}:</span><br> ${this.getWins(playerSecond)} ${
 			text["game"]["wins"][this.currentLang]
 		}`;
 		removeClass(scoreCross, "color");
