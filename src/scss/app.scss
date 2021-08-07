@@ -48,7 +48,6 @@ $foreground-color: #000;
 
 // Global
 body {
-	height: 100vh;
 	background-color: rgb(241, 241, 241);
 	color: #000;
 	&.dark {
@@ -63,9 +62,6 @@ body {
 				color: #fff;
 			}
 		}
-	}
-	.container-fluid {
-		height: 100vh;
 	}
 }
 
@@ -107,7 +103,7 @@ small {
 // Main container
 .box-container {
 	width: 100vw;
-	height: 80vh;
+	height: 70vh;
 	@include center(flex);
 	flex-direction: column;
 
